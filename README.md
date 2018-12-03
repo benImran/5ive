@@ -3,10 +3,10 @@
 ### :soccer: Team
 
 ```
-Benchaa : Back-End Developer
 Maxime : UX-UI Designer
-Clément : Front-End/Mobile Developer
 Antoine : UX-UI Designer
+Benchaa : Back-End Developer
+Clément : Front-End/Mobile Developer
 Cyril : Front-End/Mobile Developer
 ```
 
