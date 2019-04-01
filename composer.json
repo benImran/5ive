@@ -5,7 +5,12 @@
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
         "psr-4": {
-            "AppBundle\\": "src/AppBundle",
+            "5ive\\": "src/5ive",
+            "AdminBundle\\": "src/5ive/AdminBundle",
+            "GameBundle\\": "src/5ive/GameBundle",
+            "UserBundle\\": "src/5ive/UserBundle",
+            "StatisticBundle\\": "src/5ive/StatisticBundle",
+            "LevelBundle\\": "src/5ive/LevelBundle",
             "Application\\": "src/Application"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]

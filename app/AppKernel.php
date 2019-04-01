@@ -35,8 +35,12 @@ class AppKernel extends Kernel
              new FOS\UserBundle\FOSUserBundle(),
 
             // Custom Bundles
-            new AppBundle\AppBundle(),
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
+            new GameBundle\GameBundle(),
+            new UserBundle\UserBundle(),
+            new AdminBundle\AdminBundle(),
+            new StatisticBundle\StatisticBundle(),
+            new LevelBundle\LevelBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

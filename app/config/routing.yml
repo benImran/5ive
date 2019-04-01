@@ -1,6 +1,27 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+level:
+    resource: "@LevelBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+statistic:
+    resource: "@StatisticBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+admin:
+    resource: "@AdminBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+game:
+    resource: "@GameBundle/Controller/"
+    type:     annotation
+    prefix:   /
 
 admin_area:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
