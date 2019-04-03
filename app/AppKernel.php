@@ -41,6 +41,7 @@ class AppKernel extends Kernel
             new AdminBundle\AdminBundle(),
             new StatisticBundle\StatisticBundle(),
             new LevelBundle\LevelBundle(),
+            new TeamBundle\TeamBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

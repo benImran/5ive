@@ -19,8 +19,6 @@ class User extends BaseUser
      */
     protected $id;
 
-
-
     /**
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media" )
      * @ORM\JoinColumn(name="picture_id", referencedColumnName="id")
@@ -68,6 +66,12 @@ class User extends BaseUser
      */
     protected $regularityPlayer;
 
+
+    /**
+     *@ORM\ManyToMany(targetEntity="TeamBundle\Entity\Team", inversedBy="players")
+     *@JoinTable(name="users_teams")
+     */
+    protected $teams;
 
     /**
      * Set birth
@@ -313,5 +317,39 @@ class User extends BaseUser
     public function getLevel()
     {
         return $this->level;
+    }
+
+    /**
+     * Add team
+     *
+     * @param \GameBundle\Entity\Game $team
+     *
+     * @return User
+     */
+    public function addTeam(\GameBundle\Entity\Game $team)
+    {
+        $this->teams[] = $team;
+
+        return $this;
+    }
+
+    /**
+     * Remove team
+     *
+     * @param \GameBundle\Entity\Game $team
+     */
+    public function removeTeam(\GameBundle\Entity\Game $team)
+    {
+        $this->teams->removeElement($team);
+    }
+
+    /**
+     * Get teams
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTeams()
+    {
+        return $this->teams;
     }
 }

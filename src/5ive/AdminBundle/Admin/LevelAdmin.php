@@ -23,13 +23,13 @@ class LevelAdmin extends AbstractAdmin {
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name', null, array('label' => 'Niveau'));
+            ->add('label', null, array('label' => 'Niveau'));
     }
     protected function configureListFields(ListMapper $listMapper)
     {
         unset($this->listModes['mosaic']);
         $listMapper
-            ->addIdentifier('name', null, array('label' => 'Niveau'))
+            ->addIdentifier('label', null, array('label' => 'Niveau'))
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => [],

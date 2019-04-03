@@ -25,8 +25,6 @@ class GameAdmin extends AbstractAdmin {
             ->add('date', null, array(
                 'label'    => 'Date'
             ));
-
-
     }
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
