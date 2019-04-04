@@ -36,17 +36,29 @@ class Team
     private $matchs;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="players", type="string", length=255)
+     *@ORM\ManyToMany(targetEntity="UserBundle\Entity\User", mappedBy="teams")
      */
     private $players;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media" )
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     */
+    private $image;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->players = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -102,27 +114,60 @@ class Team
     }
 
     /**
-     * Set players
+     * Add player
      *
-     * @param string $players
+     * @param \UserBundle\Entity\User $player
      *
      * @return Team
      */
-    public function setPlayers($players)
+    public function addPlayer(\UserBundle\Entity\User $player)
     {
-        $this->players = $players;
+        $this->players[] = $player;
 
         return $this;
     }
 
     /**
+     * Remove player
+     *
+     * @param \UserBundle\Entity\User $player
+     */
+    public function removePlayer(\UserBundle\Entity\User $player)
+    {
+        $this->players->removeElement($player);
+    }
+
+    /**
      * Get players
      *
-     * @return string
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPlayers()
     {
         return $this->players;
     }
-}
 
+    /**
+     * Set image
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Media $image
+     *
+     * @return Team
+     */
+    public function setImage(\Application\Sonata\MediaBundle\Entity\Media $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Media
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+}
