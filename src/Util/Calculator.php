@@ -1,7 +1,7 @@
 <?php
 
 
-namespace tests\Util;
+namespace App\Util;
 
 class Calculator
 {
