@@ -5,10 +5,12 @@ namespace UserBundle\Entity;
 use Doctrine\ORM\Mapping\JoinTable;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
+ * @JMS\ExclusionPolicy("all")
  */
 class User extends BaseUser
 {
@@ -16,6 +18,7 @@ class User extends BaseUser
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
      */
     protected $id;
 
@@ -31,13 +34,12 @@ class User extends BaseUser
     protected $birth;
 
     /**
-     * @ORM\Column(type="text", name="bio")
+     * @ORM\Column(type="text", name="bio", nullable=true)
      */
     protected $bio;
 
     /**
-     *@ORM\ManyToMany(targetEntity="GameBundle\Entity\Game", inversedBy="users")
-     *@JoinTable(name="users_game")
+     *@ORM\ManyToMany(targetEntity="GameBundle\Entity\Game", mappedBy="users", fetch="EAGER")
      */
     protected $game;
 
@@ -52,17 +54,17 @@ class User extends BaseUser
     protected $level;
 
     /**
-     * @ORM\Column(type="integer", name="points")
+     * @ORM\Column(type="integer", name="points", nullable=true)
      */
     protected $points;
 
     /**
-     * @ORM\Column(type="string" , name="user_city", length=100)
+     * @ORM\Column(type="string" , name="user_city", length=100, nullable=true)
      */
     protected $userCity;
 
     /**
-     * @ORM\Column(type="string", name="regularity_player", length=100)
+     * @ORM\Column(type="string", name="regularity_player", length=100, nullable=true)
      */
     protected $regularityPlayer;
 

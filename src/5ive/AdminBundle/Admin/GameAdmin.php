@@ -24,6 +24,9 @@ class GameAdmin extends AbstractAdmin {
             ))
             ->add('date', null, array(
                 'label'    => 'Date'
+            ))
+            ->add('users', null, array(
+                'label'    => 'Joueur'
             ));
     }
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -31,7 +34,8 @@ class GameAdmin extends AbstractAdmin {
         $datagridMapper
             ->add('name', null, array('label' => 'Nom de la partie'))
             ->add('town', null, array('label' => 'Ville'))
-            ->add('date', null, array('label' => 'Date'));
+            ->add('date', null, array('label' => 'Date'))
+            ->add('users', null, array('label' => 'Joueur'));
     }
     protected function configureListFields(ListMapper $listMapper)
     {
@@ -40,6 +44,7 @@ class GameAdmin extends AbstractAdmin {
             ->addIdentifier('name', null, array('label' => 'Nom de la partie'))
             ->addIdentifier('town', null, array('label' => 'Ville'))
             ->addIdentifier('date', null, array('label' => 'Date'))
+            ->addIdentifier('users', null, array('label' => 'Joueur'))
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => [],

@@ -3,6 +3,7 @@
 namespace GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * Game
@@ -47,7 +48,8 @@ class Game
     private $chat;
 
     /**
-     *@ORM\ManyToMany(targetEntity="UserBundle\Entity\User", mappedBy="game")
+     *@ORM\ManyToMany(targetEntity="UserBundle\Entity\User", inversedBy="game", fetch="EAGER")
+     *@JoinTable(name="users_game")
      */
     private $users;
 

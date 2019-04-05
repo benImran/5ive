@@ -6,6 +6,8 @@ imports:
     - { resource: "@UserBundle/Resources/config/services.yml" }
     - { resource: "@AdminBundle/Resources/config/services.yml" }
     - { resource: "@TeamBundle/Resources/config/services.yml" }
+    - { resource: "@LevelBundle/Resources/config/services.yml" }
+    - { resource: "@ApiBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -127,3 +129,16 @@ fos_user:
     from_email:
         address: "%mailer_user%"
         sender_name: "%mailer_user%"
+
+#lexik_jwt_authentication:
+#    secret_key:       '%kernel.project_dir%/app/config/jwt/private.pem' # required for token creation
+#    public_key:       '%kernel.project_dir%/app/config/jwt/public.pem'  # required for token verification
+#    pass_phrase:      '%jwtpass_phrase%' # required for token creation, usage of an environment variable is recommended
+#    token_ttl:        2592000
+
+fos_rest:
+    # If you want to have "ParamFetcher $paramFetcher" accessible in your function
+    param_fetcher_listener: true
+    routing_loader:
+        default_format: json
+        include_format: false
