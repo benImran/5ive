@@ -1,6 +1,32 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+team:
+    resource: "@TeamBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+level:
+    resource: "@LevelBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+statistic:
+    resource: "@StatisticBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+admin:
+    resource: "@AdminBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+game:
+    resource: "@GameBundle/Controller/"
+    type:     annotation
+    prefix:   /
 
 admin_area:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
@@ -18,3 +44,13 @@ gallery:
 media:
     resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
     prefix: /media
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+api_login_check:
+    path: /api/login_check
+
+api:
+    resource: "@ApiBundle/Resources/config/routing.yml"
+    prefix:   /api/

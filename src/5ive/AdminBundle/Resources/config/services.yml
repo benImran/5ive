@@ -1,0 +1,22 @@
+services:
+    admin.game:
+        class: AdminBundle\Admin\GameAdmin
+        arguments: [~, GameBundle\Entity\Game, ~]
+        tags:
+        - { name: sonata.admin, manager_type: orm, label: Match, group: "Match", on_top: true, icon: '<i class="fa fa-users"></i>' }
+    admin.user:
+        class: AdminBundle\Admin\UserAdmin
+        arguments: [~, UserBundle\Entity\User, ~]
+        tags:
+        - { name: sonata.admin, manager_type: orm, label: Utilisateur, group: "Utilisateur", on_top: true, icon: '<i class="fa fa-users"></i>' }
+    admin.statistic:
+        class: AdminBundle\Admin\StatisticAdmin
+        arguments: [~, StatisticBundle\Entity\Statistic, ~]
+        tags:
+        - { name: sonata.admin, manager_type: orm, label: Statistique, group: "Statistique", on_top: true, icon: '<i class="fa fa-users"></i>' }
+    admin.level:
+        class: AdminBundle\Admin\LevelAdmin
+        arguments: [~, LevelBundle\Entity\Level, ~]
+        tags:
+        - { name: sonata.admin, manager_type: orm, label: Niveau, group: "Niveau", on_top: true, icon: '<i class="fa fa-users"></i>' }
+

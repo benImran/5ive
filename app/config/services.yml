@@ -19,18 +19,52 @@ services:
 
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    AppBundle\:
-        resource: '../../src/AppBundle/*'
-        # you can exclude directories or files
-        # but if a service is unused, it's removed anyway
-        exclude: '../../src/AppBundle/{Entity,Repository,Tests}'
+#    AppBundle\:
+#        resource: '../../src/AppBundle/*'
+#        # you can exclude directories or files
+#        # but if a service is unused, it's removed anyway
+#        exclude: '../../src/AppBundle/{Entity,Repository,Tests}'
+#
+#    # controllers are imported separately to make sure they're public
+#    # and have a tag that allows actions to type-hint services
+#    AppBundle\Controller\:
+#        resource: '../../src/AppBundle/Controller'
+#        public: true
+#        tags: ['controller.service_arguments']
 
-    # controllers are imported separately to make sure they're public
-    # and have a tag that allows actions to type-hint services
-    AppBundle\Controller\:
-        resource: '../../src/AppBundle/Controller'
-        public: true
-        tags: ['controller.service_arguments']
+# app/config/security.yml
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+                # if you are using Symfony < 2.8, use the following config instead:
+                # csrf_provider: form.csrf_provider
+
+            logout:       true
+            anonymous:    true
+
+    access_control:
+    - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin/, role: ROLE_ADMIN }
+    - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+
 
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:

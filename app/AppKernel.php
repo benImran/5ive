@@ -30,13 +30,23 @@ class AppKernel extends Kernel
             new Sonata\MediaBundle\SonataMediaBundle(),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+//            new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
 
             // FOSUser Bundle
-            // new FOS\UserBundle\FOSUserBundle(),
+             new FOS\UserBundle\FOSUserBundle(),
+
+            // FOSRest
+             new FOS\RestBundle\FOSRestBundle(),
 
             // Custom Bundles
-            new AppBundle\AppBundle(),
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
+            new GameBundle\GameBundle(),
+            new UserBundle\UserBundle(),
+            new AdminBundle\AdminBundle(),
+            new StatisticBundle\StatisticBundle(),
+            new LevelBundle\LevelBundle(),
+            new TeamBundle\TeamBundle(),
+            new ApiBundle\ApiBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
