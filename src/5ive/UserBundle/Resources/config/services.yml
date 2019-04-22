@@ -2,3 +2,9 @@ services:
 #    user.example:
 #        class: UserBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+    app.token_authenticator:
+        class: UserBundle\Security\TokenAuthenticator
+    UserBundle\Security\TokenAuthenticator: ~
+
+    UserBundle\Controller\UserController:
+        arguments: ['@security.password_encoder']

@@ -12,7 +12,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Table(name="fos_user")
  * @JMS\ExclusionPolicy("all")
  */
-class User extends BaseUser
+class User extends BaseUser implements \Serializable
 {
     /**
      * @ORM\Id
@@ -54,7 +54,16 @@ class User extends BaseUser
     protected $level;
 
     /**
+     * @JMS\Expose
+     * @JMS\Groups({"users", "details"})
+     * @var string
+     */
+    protected $username;
+
+    /**
      * @ORM\Column(type="integer", name="points", nullable=true)
+     * @JMS\Groups({"users", "details"})
+     * @JMS\Expose
      */
     protected $points;
 
@@ -68,12 +77,17 @@ class User extends BaseUser
      */
     protected $regularityPlayer;
 
-
     /**
      *@ORM\ManyToMany(targetEntity="TeamBundle\Entity\Team", inversedBy="players")
      *@JoinTable(name="users_teams")
      */
     protected $teams;
+
+    /**
+     * @ORM\Column(type="string", unique=true, nullable=true)
+     */
+    private $apiKey;
+
 
     /**
      * Set birth
@@ -354,4 +368,22 @@ class User extends BaseUser
     {
         return $this->teams;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function generApiKey()
+    {
+        $this->apiKey = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');;
+    }
+
+
 }

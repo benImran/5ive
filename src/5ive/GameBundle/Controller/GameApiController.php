@@ -3,8 +3,8 @@
 namespace GameBundle\Controller;
 
 use GameBundle\Entity\Game;
+use JMS\Serializer\SerializationContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class GameApiController extends Controller
 {
@@ -16,10 +16,12 @@ class GameApiController extends Controller
         $gameRepository = $em->getRepository(Game::class);
         $games = $gameRepository->findAll();
 
-        $games = $serializer->toArray($games);
+        $games = $serializer->serialize($games, 'json', SerializationContext::create()->setGroups(array('users')));
+        //$games = $serializer->serialize($games, 'json');
+        //$games = $serializer->toArray($games);
 
         echo '<pre>';
-        print_r($games);
+        dump($games);
         die;
 //        return ;
     }

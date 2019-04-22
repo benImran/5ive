@@ -4,6 +4,8 @@ namespace GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
+use JMS\Serializer\Annotation as JMS;
+
 
 /**
  * Game
@@ -25,29 +27,32 @@ class Game
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100)
+     * @JMS\Groups({"users", "details"})
      */
     private $name;
 
     /**
      * @var string
-     *
+     * @JMS\Groups({"users"})
      * @ORM\Column(name="town", type="string", length=100)
      */
     private $town;
 
     /**
      * @var \DateTime
-     *
+     * @JMS\Groups({"users", "details"})
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
 
     /**
      * @ORM\Column(type="array", name="chat")
+     * @JMS\Groups({"users", "details"})
      */
     private $chat;
 
     /**
+     * @JMS\Groups({"users", "details"})
      *@ORM\ManyToMany(targetEntity="UserBundle\Entity\User", inversedBy="game", fetch="EAGER")
      *@JoinTable(name="users_game")
      */
