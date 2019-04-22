@@ -90,13 +90,13 @@ class UserController extends Controller
         $picture = $request->request->get('picture');
         $password = $request->request->get('password');
 
-        if (isset($username)){ return new Response('le username est manquant');}
-        if (isset($email)){ return new Response('l\'email est manquant');}
-        if (isset($birth)){ return new Response('la date de naissance est manquante');}
-        if (isset($regularityPlayer)){ return new Response('fréquence de jeu est manquant');}
-        if (isset($userCity)){ return new Response('la ville est manquante');}
-        if (isset($picture)){ return new Response('la photo de profil est manquante');}
-        if (isset($password)){ return new Response('le mot de passe est manquant');}
+        if (isset($username) || empty($username)){ return new Response('le username est manquant');}
+        if (isset($email) || empty($email)){ return new Response('l\'email est manquant');}
+        if (isset($birth) || empty($birth)){ return new Response('la date de naissance est manquante');}
+        if (isset($regularityPlayer) || empty($regularityPlayer)){ return new Response('fréquence de jeu est manquant');}
+        if (isset($userCity) || empty($userCity)){ return new Response('la ville est manquante');}
+        if (isset($picture) || empty($picture)){ return new Response('la photo de profil est manquante');}
+        if (isset($password) || empty($password)){ return new Response('le mot de passe est manquant');}
 
         $user = new User();
 
@@ -107,9 +107,13 @@ class UserController extends Controller
         $user->setUserCity($userCity);
         $user->setPicture($media);
         $user->setPassword($encoder->encodePassword($user,$password));
+        $user->generApiKey();
 
         $em->persist($user);
         $em->flush();
-        die('oki');
+        $serializer = $this->get('jms_serializer');
+
+        $data = $serializer->serialize(['userKey' => $user->getApiKey()],'json');
+        return new Response($data, 200);
     }
 }

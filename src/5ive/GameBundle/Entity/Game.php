@@ -3,7 +3,9 @@
 namespace GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\OneToOne;
 use JMS\Serializer\Annotation as JMS;
 
 
@@ -12,6 +14,8 @@ use JMS\Serializer\Annotation as JMS;
  *
  * @ORM\Table(name="game")
  * @ORM\Entity(repositoryClass="GameBundle\Repository\GameRepository")
+ *
+ * @JMS\ExclusionPolicy("all")
  */
 class Game
 {
@@ -20,6 +24,8 @@ class Game
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
+     * @JMS\Groups({"game","games"})
      */
     private $id;
 
@@ -27,34 +33,57 @@ class Game
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100)
-     * @JMS\Groups({"users", "details"})
+     * @JMS\Expose
+     * @JMS\Groups({"game","games"})
      */
     private $name;
 
     /**
      * @var string
-     * @JMS\Groups({"users"})
      * @ORM\Column(name="town", type="string", length=100)
+     * @JMS\Expose
+     *@JMS\Groups({"game","games"})
      */
     private $town;
 
     /**
      * @var \DateTime
-     * @JMS\Groups({"users", "details"})
      * @ORM\Column(name="date", type="datetime")
+     * @JMS\Expose
+     * @JMS\Groups({"game","games"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="array", name="chat")
-     * @JMS\Groups({"users", "details"})
+     * @JMS\Groups({"game","games"})
+     * @JMS\Expose
      */
     private $chat;
 
     /**
-     * @JMS\Groups({"users", "details"})
+     * @var string
+     * @ORM\Column(name="nbr_max_players", type="integer")
+     * @JMS\Groups({"game","games"})
+     * @JMS\Expose
+     */
+    private $nbrMaxPlayers;
+
+    /**
+     * One gameOrganisator has One user.
+     * @OneToOne(targetEntity="UserBundle\Entity\User", inversedBy="userOrganisator")
+     * @JoinColumn(name="user_organisator_id", referencedColumnName="id")
+     * @JMS\Groups({"game","games"})
+     * @JMS\Expose
+     */
+    private $organisator;
+
+    /**
+     *
      *@ORM\ManyToMany(targetEntity="UserBundle\Entity\User", inversedBy="game", fetch="EAGER")
      *@JoinTable(name="users_game")
+     * @JMS\Groups({"game","games"})
+     * @JMS\Expose
      */
     private $users;
 
@@ -204,5 +233,47 @@ class Game
     public function getChat()
     {
         return $this->chat;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNbrMaxPlayers()
+    {
+        return $this->nbrMaxPlayers;
+    }
+
+    /**
+     * @param mixed $nbrMaxPlayers
+     */
+    public function setNbrMaxPlayers($nbrMaxPlayers)
+    {
+        $this->nbrMaxPlayers = $nbrMaxPlayers;
+    }
+
+
+
+    /**
+     * Set organisator
+     *
+     * @param \UserBundle\Entity\User $organisator
+     *
+     * @return Game
+     */
+    public function setOrganisator(\UserBundle\Entity\User $organisator = null)
+    {
+        $this->organisator = $organisator;
+
+        return $this;
+    }
+
+    /**
+     * Get organisator
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getOrganisator()
+    {
+        return $this->organisator;
     }
 }

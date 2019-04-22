@@ -3,6 +3,7 @@
 namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\OneToOne;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
@@ -25,6 +26,7 @@ class User extends BaseUser implements \Serializable
     /**
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media" )
      * @ORM\JoinColumn(name="picture_id", referencedColumnName="id")
+     *
      */
     protected $picture;
 
@@ -55,7 +57,7 @@ class User extends BaseUser implements \Serializable
 
     /**
      * @JMS\Expose
-     * @JMS\Groups({"users", "details"})
+     * @JMS\Groups({"game","games"})
      * @var string
      */
     protected $username;
@@ -84,9 +86,15 @@ class User extends BaseUser implements \Serializable
     protected $teams;
 
     /**
-     * @ORM\Column(type="string", unique=true, nullable=true)
+     * @ORM\Column(type="string", unique=true)
      */
     private $apiKey;
+
+    /**
+     * One Customer has One Cart.
+     * @OneToOne(targetEntity="GameBundle\Entity\Game", mappedBy="organisator")
+     */
+    private $userOrganisator;
 
 
     /**
@@ -267,6 +275,8 @@ class User extends BaseUser implements \Serializable
         return $this->game;
     }
 
+
+
     /**
      * Add statistic
      *
@@ -386,4 +396,42 @@ class User extends BaseUser implements \Serializable
     }
 
 
+
+    /**
+     * Set apiKey
+     *
+     * @param string $apiKey
+     *
+     * @return User
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * Set userOrganisator
+     *
+     * @param \GameBundle\Entity\Game $userOrganisator
+     *
+     * @return User
+     */
+    public function setUserOrganisator(\GameBundle\Entity\Game $userOrganisator = null)
+    {
+        $this->userOrganisator = $userOrganisator;
+
+        return $this;
+    }
+
+    /**
+     * Get userOrganisator
+     *
+     * @return \GameBundle\Entity\Game
+     */
+    public function getUserOrganisator()
+    {
+        return $this->userOrganisator;
+    }
 }
