@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use UserBundle\Entity\User;
 
 
@@ -17,6 +16,7 @@ use UserBundle\Entity\User;
 class UserController extends Controller
 {
     protected $encoder;
+
     public function __construct(UserPasswordEncoder $encoder)
     {
         $this->encoder = $encoder;
@@ -74,6 +74,7 @@ class UserController extends Controller
      * @Route("/signUp", name="loginTEST")
      * @param Request $request
      * @return Response
+     * @throws \Exception
      */
     public function signUp(Request $request)
     {
