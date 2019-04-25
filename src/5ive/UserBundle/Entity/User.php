@@ -86,7 +86,7 @@ class User extends BaseUser implements \Serializable
     protected $teams;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string", unique=true, nullable=true)
      */
     private $apiKey;
 
@@ -95,6 +95,7 @@ class User extends BaseUser implements \Serializable
      * @OneToOne(targetEntity="GameBundle\Entity\Game", mappedBy="organisator")
      */
     private $userOrganisator;
+
 
 
     /**

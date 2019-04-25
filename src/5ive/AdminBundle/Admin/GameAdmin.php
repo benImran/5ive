@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class GameAdmin extends AbstractAdmin {
 
@@ -22,8 +23,12 @@ class GameAdmin extends AbstractAdmin {
             ->add('town', null, array(
                 'label'    => 'Ville'
             ))
-            ->add('date', null, array(
-                'label'    => 'Date'
+            ->add('date', DateType::class, array(
+                'label'    => 'Date du match',
+                'widget'   => 'single_text'
+            ))
+            ->add('nbrMaxPlayers', null, array(
+                'label'    => 'Nombre de joueurs maximum'
             ))
             ->add('users', null, array(
                 'label'    => 'Joueur'
@@ -38,7 +43,8 @@ class GameAdmin extends AbstractAdmin {
         $datagridMapper
             ->add('name', null, array('label' => 'Nom de la partie'))
             ->add('town', null, array('label' => 'Ville'))
-            ->add('date', null, array('label' => 'Date'))
+            ->add('date', null, array('label' => 'Date',))
+            ->add('nbrMaxPlayers', null, array('label' => 'Nombre de joueurs maximum'))
             ->add('users', null, array('label' => 'Joueur'))
             ->add('organisator', null, array('label' => 'Organisateur du match'));
     }

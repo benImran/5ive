@@ -89,8 +89,8 @@ class GameApiController extends Controller
 
         $em->persist($game);
         $em->flush();
-        return new Response('ok', 200);
 
+        return new Response('ok', 200);
 
     }
 }
