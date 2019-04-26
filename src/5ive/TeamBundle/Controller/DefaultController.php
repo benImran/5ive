@@ -12,7 +12,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        echo 'heloo';
-        return $this->redirectToRoute('user');
+        return $this->redirectToRoute('fos_user_security_login');
     }
 }

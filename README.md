@@ -1,4 +1,13 @@
 # Documentation API
+
+## Domain:
+
+**Base Url**: : http://five.cyril-vinikoff.fr/app_dev.php/
+
+**Backoffice**: : http://five.cyril-vinikoff.fr/app_dev.php/admin/dashboard
+
+## Sommaire:
+
 🔑 [Authentication](#auth)
 
 😎 [Users](#users)
