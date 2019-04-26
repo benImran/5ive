@@ -48,3 +48,83 @@
 
     }
    ```
+   
+<a id="game"></a>
+## Game
+
+- **Liste des matchs :** POST `/api/listMatch` :
+	- Body de la requête pour lister les matchs :
+	```
+	{
+		"id":                [id du match],
+		"name":              [username du match],
+		"town":              [town du match]
+		"date":              [date du match]
+		"nbr_max_players":   [nbr_max_players de joueur pour le match]
+		"organisator":       [username de l'organisateur]
+        "users":             [username des joueurs associés ]
+	}
+	```
+	- Exemple de la réponse (JSON) :
+    ```
+    {
+
+        {
+                "id": 1,
+                "name": "Game5",
+                "town": "Ivry sur Seine",
+                "date": "2019-05-01T00:00:00+02:00",
+                "nbr_max_players": 10,
+                "organisator": {
+                    "username": "ben"
+                },
+                "users": [
+                    {
+                        "username": "ben"
+                    },
+                    {
+                        "username": "Abraham"
+                    },
+                    {
+                        "username": "Max"
+                    }
+                    {
+                        "username": "Julien"
+                    }
+                    {
+                        "username": "Cyril"
+                    }
+                    {
+                        "username": "Samy"
+                    }
+                    {
+                        "username": "Wes"
+                    }
+                    {
+                        "username": "Seb"
+                    }
+                    {
+                        "username": "Lucas"
+                    }
+                    {
+                        "username": "Rocco"
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Game5",
+                "town": "Ivry sur Seine",
+                "date": "2019-05-01T00:00:00+02:00",
+                "nbr_max_players": 2,
+                "users": [
+                   {
+                       "username": "ben"
+                   },
+                   {
+                       "username": "Abraham"
+                   },
+                ]
+            }
+    }
+    ```
