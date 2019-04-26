@@ -18,13 +18,13 @@
 	}
 	```
 	- Exemple de la réponse (JSON) :
-    	```
-    	{
-    
-    		"userKey": "cg88qLM3VCS5P2IarMbqfBiC5yqBQzrc3H-Esiy_FSQ",
-               "expires": "2019-04-27T14:37:16+02:00"
-    
-    	}
+    ```
+    {
+
+        "userKey": "cg88qLM3VCS5P2IarMbqfBiC5yqBQzrc3H-Esiy_FSQ",
+           "expires": "2019-04-27T14:37:16+02:00"
+
+    }
     	```
 - **Inscription :** POST `/api/signUp` :
 	- Body de la requête d'inscription :
