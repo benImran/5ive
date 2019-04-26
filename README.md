@@ -49,7 +49,7 @@
     }
    ```
    
-<a id="game"></a>
+<a id="match"></a>
 ## Game
 
 - **Liste des matchs :** POST `/api/listMatch` :
