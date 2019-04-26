@@ -26,7 +26,7 @@ security:
         api:
             pattern:  ^/api
             stateless: true
-            anonymous: false
+            anonymous: true
             provider: apiTokken
             guard:
                 authenticators:
@@ -47,4 +47,5 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/sigIn, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/signUp, roles: IS_AUTHENTICATED_ANONYMOUSLY }

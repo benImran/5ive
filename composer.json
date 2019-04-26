@@ -6,6 +6,7 @@
     "autoload": {
         "psr-4": {
             "5ive\\": "src/5ive",
+            "Model\\": "src/5ive/Model",
             "AdminBundle\\": "src/5ive/AdminBundle",
             "GameBundle\\": "src/5ive/GameBundle",
             "UserBundle\\": "src/5ive/UserBundle",

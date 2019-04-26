@@ -3,8 +3,10 @@
 namespace UserBundle\Controller;
 
 use Application\Sonata\MediaBundle\Entity\Media;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +41,8 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/signIn", name="signIn")
+     * @Route("/api/signIn", name="signIn")
+     * @Method("POST")
      * @param Request $request
      * @return Response
      */
@@ -60,10 +63,13 @@ class UserController extends Controller
 
         if( $this->encoder->isPasswordValid($user,$password )){
             $user->generApiKey();
+
             $em->persist($user);
             $em->flush();
-            $data = $serializer->serialize(['userKey' => $user->getApiKey()],'json');
-            return new Response($data, 200);
+
+            $res = $this->get('app.token.generator')->getTokenAction($user, $serializer);
+
+            return $res;
         };
         }else {
             return new Response('username ou password incorrect', 200);
@@ -71,9 +77,10 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/signUp", name="loginTEST")
+     * @Route("/api/signUp", name="loginTEST")
      * @param Request $request
      * @return Response
+     * @Method("POST")
      * @throws \Exception
      */
     public function signUp(Request $request)
@@ -85,19 +92,19 @@ class UserController extends Controller
         //$media->set('testimg');
         $username = $request->request->get('username');
         $email = $request->request->get('email');
-        $birth = $request->request->get('birth');
+        $birth = str_replace('/', '.', $request->request->get('birth'));
         $regularityPlayer = $request->request->get('regularityPlayer');
         $userCity = $request->request->get('userCity');
-        $picture = $request->request->get('picture');
+        $picture = $request->files->get('picture');
         $password = $request->request->get('password');
 
-        if (isset($username) || empty($username)){ return new Response('le username est manquant');}
-        if (isset($email) || empty($email)){ return new Response('l\'email est manquant');}
-        if (isset($birth) || empty($birth)){ return new Response('la date de naissance est manquante');}
-        if (isset($regularityPlayer) || empty($regularityPlayer)){ return new Response('fréquence de jeu est manquant');}
-        if (isset($userCity) || empty($userCity)){ return new Response('la ville est manquante');}
-        if (isset($picture) || empty($picture)){ return new Response('la photo de profil est manquante');}
-        if (isset($password) || empty($password)){ return new Response('le mot de passe est manquant');}
+        if (!isset($username) || empty($username)){ return new Response('le username est manquant');}
+        if (!isset($email) || empty($email)){ return new Response('l\'email est manquant');}
+        if (!isset($birth) || empty($birth)){ return new Response('la date de naissance est manquante');}
+        if (!isset($regularityPlayer) || empty($regularityPlayer)){ return new Response('fréquence de jeu est manquant');}
+        if (!isset($userCity) || empty($userCity)){ return new Response('la ville est manquante');}
+        if (!isset($picture) || empty($picture)){ return new Response('la photo de profil est manquante');}
+        if (!isset($password) || empty($password)){ return new Response('le mot de passe est manquant');}
 
         $user = new User();
 
@@ -114,7 +121,8 @@ class UserController extends Controller
         $em->flush();
         $serializer = $this->get('jms_serializer');
 
-        $data = $serializer->serialize(['userKey' => $user->getApiKey()],'json');
-        return new Response($data, 200);
+        $res = $this->get('app.token.generator')->getTokenAction($user, $serializer);
+
+        return $res;
     }
 }
