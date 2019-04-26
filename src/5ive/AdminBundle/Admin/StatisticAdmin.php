@@ -26,7 +26,7 @@ class StatisticAdmin extends AbstractAdmin {
                 'label'    => 'Carton'
             ))
             ->add('cardValue', null, array(
-                'label'    => 'Valeur du carton'
+                'label'    => 'Nombres de cartons'
             ));
 
     }
@@ -36,7 +36,7 @@ class StatisticAdmin extends AbstractAdmin {
             ->add('name', null, array('label' => 'Nom de la statistique'))
             ->add('value', null, array('label' => 'Valeur'))
             ->add('card', null, array('label' => 'Carton'))
-            ->add('cardValue', null, array('label' => 'Nombre de carton'));
+            ->add('cardValue', null, array('label' => 'Nombres de cartons'));
     }
     protected function configureListFields(ListMapper $listMapper)
     {
@@ -49,7 +49,6 @@ class StatisticAdmin extends AbstractAdmin {
                 'actions' => array(
                     'edit' => [],
                     'delete' => [],
-                    'show' => []
                 )
             ));
     }
