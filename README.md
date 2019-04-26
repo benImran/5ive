@@ -40,7 +40,7 @@
 	}
 	```
 	- Exemple de la réponse (JSON) :
-    	```
+    ```
     {
 
         "userKey": "M3mB_RpnEertNTJswr_v0oiI_EP7YztSHA3vPo9b0Ls",
