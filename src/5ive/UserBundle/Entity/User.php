@@ -96,6 +96,13 @@ class User extends BaseUser implements \Serializable
      */
     private $userOrganisator;
 
+    /**
+     * @ORM\Column(type="string", name="rank", length=100)
+     */
+    private $rank;
+
+
+
 
 
     /**
@@ -434,5 +441,29 @@ class User extends BaseUser implements \Serializable
     public function getUserOrganisator()
     {
         return $this->userOrganisator;
+    }
+
+    /**
+     * Set rank
+     *
+     * @param string $rank
+     *
+     * @return User
+     */
+    public function setRank($rank)
+    {
+        $this->rank = $rank;
+
+        return $this;
+    }
+
+    /**
+     * Get rank
+     *
+     * @return string
+     */
+    public function getRank()
+    {
+        return $this->rank;
     }
 }

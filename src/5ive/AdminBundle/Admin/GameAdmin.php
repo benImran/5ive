@@ -61,7 +61,6 @@ class GameAdmin extends AbstractAdmin {
                 'actions' => array(
                     'edit' => [],
                     'delete' => [],
-                    'show' => []
                 )
             ));
     }

@@ -38,6 +38,15 @@ class Statistic
     private $value;
 
     /**
+     * @ORM\Column(type="string", name="card", length=100)
+     */
+    private $card;
+    /**
+     * @ORM\Column(type="integer", name="card_value")
+     */
+    private $cardValue;
+
+    /**
      *@ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="statistic")
      *@ORM\JoinColumn(name="users_id", referencedColumnName="id")
      */
@@ -148,5 +157,55 @@ class Statistic
     public function getPicto()
     {
         return $this->picto;
+    }
+
+
+
+    /**
+     * Set card
+     *
+     * @param string $card
+     *
+     * @return Statistic
+     */
+    public function setCard($card)
+    {
+        $this->card = $card;
+
+        return $this;
+    }
+
+    /**
+     * Get card
+     *
+     * @return string
+     */
+    public function getCard()
+    {
+        return $this->card;
+    }
+
+    /**
+     * Set cardValue
+     *
+     * @param integer $cardValue
+     *
+     * @return Statistic
+     */
+    public function setCardValue($cardValue)
+    {
+        $this->cardValue = $cardValue;
+
+        return $this;
+    }
+
+    /**
+     * Get cardValue
+     *
+     * @return integer
+     */
+    public function getCardValue()
+    {
+        return $this->cardValue;
     }
 }

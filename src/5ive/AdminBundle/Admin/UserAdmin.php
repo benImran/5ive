@@ -63,6 +63,9 @@ class UserAdmin extends AbstractAdmin
             ))
             ->add('regularityPlayer', null, array(
                 'label'    => 'Régularité du joueur'
+            ))
+            ->add('rank', null, array(
+                'label'    => 'Rang du joueur'
             ));
     }
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -78,6 +81,7 @@ class UserAdmin extends AbstractAdmin
             ->add('bio', null, array('label' => 'Biographie'))
             ->add('level', null, array('label' => 'Niveau'))
             ->add('points', null, array('label' => 'Points'))
+            ->add('rank', null, array('label' => 'Rang du joueur'))
             ->add('regularityPlayer', null, array('label' => 'Régularité du joueur'));
     }
     protected function configureListFields(ListMapper $listMapper)

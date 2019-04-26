@@ -19,19 +19,24 @@ class StatisticAdmin extends AbstractAdmin {
             ->add('name', null, array(
                 'label'    => 'Nom de la statistique'
             ))
-            ->add('picto', null, array(
-                'label'    => 'Picto'
-            ))
             ->add('value', null, array(
                 'label'    => 'Valeur'
+            ))
+            ->add('card', null, array(
+                'label'    => 'Carton'
+            ))
+            ->add('cardValue', null, array(
+                'label'    => 'Valeur du carton'
             ));
+
     }
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
             ->add('name', null, array('label' => 'Nom de la statistique'))
-            ->add('picto', null, array('label' => 'Picto'))
-            ->add('value', null, array('label' => 'Valeur'));
+            ->add('value', null, array('label' => 'Valeur'))
+            ->add('card', null, array('label' => 'Carton'))
+            ->add('cardValue', null, array('label' => 'Nombre de carton'));
     }
     protected function configureListFields(ListMapper $listMapper)
     {
