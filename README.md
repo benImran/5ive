@@ -22,10 +22,10 @@
     {
 
         "userKey": "cg88qLM3VCS5P2IarMbqfBiC5yqBQzrc3H-Esiy_FSQ",
-           "expires": "2019-04-27T14:37:16+02:00"
+        "expires": "2019-04-27T14:37:16+02:00"
 
     }
-    	```
+    ```
 - **Inscription :** POST `/api/signUp` :
 	- Body de la requête d'inscription :
 	```
@@ -44,7 +44,7 @@
     {
 
         "userKey": "M3mB_RpnEertNTJswr_v0oiI_EP7YztSHA3vPo9b0Ls",
-         "expires": "2019-04-27T15:58:09+02:00"
+        "expires": "2019-04-27T15:58:09+02:00"
 
     }
     ```
