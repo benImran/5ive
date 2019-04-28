@@ -276,4 +276,9 @@ class Game
     {
         return $this->organisator;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

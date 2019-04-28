@@ -8,11 +8,6 @@ level:
     type:     annotation
     prefix:   /
 
-statistic:
-    resource: "@StatisticBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 admin:
     resource: "@AdminBundle/Controller/"
     type:     annotation
@@ -25,6 +20,11 @@ user:
 
 game:
     resource: "@GameBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+regularity_player:
+    resource: "@RegularityPlayerBundle/Controller/"
     type:     annotation
     prefix:   /
 

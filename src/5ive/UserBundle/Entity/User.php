@@ -37,6 +37,8 @@ class User extends BaseUser implements \Serializable
 
     /**
      * @ORM\Column(type="text", name="bio", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"level"})
      */
     protected $bio;
 
@@ -45,45 +47,40 @@ class User extends BaseUser implements \Serializable
      */
     protected $game;
 
-    /**
-     * @ORM\OneToMany(targetEntity="StatisticBundle\Entity\Statistic", mappedBy="users")
-     */
-    protected $statistic;
 
     /**
-     * @ORM\OneToMany(targetEntity="LevelBundle\Entity\Level", mappedBy="users")
+     * @ORM\OneToOne(targetEntity="LevelBundle\Entity\Level", mappedBy="users")
+     * @JMS\Expose
+     * @JMS\Groups({"level"})
      */
     protected $level;
 
     /**
      * @JMS\Expose
-     * @JMS\Groups({"game","games"})
+     * @JMS\Groups({"game","games","level"})
      * @var string
      */
     protected $username;
 
-    /**
-     * @ORM\Column(type="integer", name="points", nullable=true)
-     * @JMS\Groups({"users", "details"})
-     * @JMS\Expose
-     */
-    protected $points;
 
     /**
      * @ORM\Column(type="string" , name="user_city", length=100, nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"level"})
      */
     protected $userCity;
 
-    /**
-     * @ORM\Column(type="string", name="regularity_player", length=100, nullable=true)
-     */
-    protected $regularityPlayer;
 
     /**
      *@ORM\ManyToMany(targetEntity="TeamBundle\Entity\Team", inversedBy="players")
      *@JoinTable(name="users_teams")
      */
     protected $teams;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RegularityPlayerBundle\Entity\RegularityPlayer", mappedBy="users")
+     */
+    protected $regularityPlayers;
 
     /**
      * @ORM\Column(type="string", unique=true, nullable=true)
@@ -95,14 +92,6 @@ class User extends BaseUser implements \Serializable
      * @OneToOne(targetEntity="GameBundle\Entity\Game", mappedBy="organisator")
      */
     private $userOrganisator;
-
-    /**
-     * @ORM\Column(type="string", name="rank", length=100)
-     */
-    private $rank;
-
-
-
 
 
     /**
@@ -153,29 +142,7 @@ class User extends BaseUser implements \Serializable
         return $this->bio;
     }
 
-    /**
-     * Set points
-     *
-     * @param integer $points
-     *
-     * @return User
-     */
-    public function setPoints($points)
-    {
-        $this->points = $points;
 
-        return $this;
-    }
-
-    /**
-     * Get points
-     *
-     * @return integer
-     */
-    public function getPoints()
-    {
-        return $this->points;
-    }
 
     /**
      * Set userCity
@@ -201,29 +168,6 @@ class User extends BaseUser implements \Serializable
         return $this->userCity;
     }
 
-    /**
-     * Set regularityPlayer
-     *
-     * @param string $regularityPlayer
-     *
-     * @return User
-     */
-    public function setRegularityPlayer($regularityPlayer)
-    {
-        $this->regularityPlayer = $regularityPlayer;
-
-        return $this;
-    }
-
-    /**
-     * Get regularityPlayer
-     *
-     * @return string
-     */
-    public function getRegularityPlayer()
-    {
-        return $this->regularityPlayer;
-    }
 
     /**
      * Set picture
@@ -283,31 +227,6 @@ class User extends BaseUser implements \Serializable
         return $this->game;
     }
 
-
-
-    /**
-     * Add statistic
-     *
-     * @param \StatisticBundle\Entity\Statistic $statistic
-     *
-     * @return User
-     */
-    public function addStatistic(\StatisticBundle\Entity\Statistic $statistic)
-    {
-        $this->statistic[] = $statistic;
-
-        return $this;
-    }
-
-    /**
-     * Remove statistic
-     *
-     * @param \StatisticBundle\Entity\Statistic $statistic
-     */
-    public function removeStatistic(\StatisticBundle\Entity\Statistic $statistic)
-    {
-        $this->statistic->removeElement($statistic);
-    }
 
     /**
      * Get statistic
@@ -443,27 +362,44 @@ class User extends BaseUser implements \Serializable
         return $this->userOrganisator;
     }
 
+
+
     /**
-     * Set rank
+     * Add regularityPlayer
      *
-     * @param string $rank
+     * @param \RegularityPlayerBundle\Entity\RegularityPlayer $regularityPlayer
      *
      * @return User
      */
-    public function setRank($rank)
+    public function addRegularityPlayer(\RegularityPlayerBundle\Entity\RegularityPlayer $regularityPlayer)
     {
-        $this->rank = $rank;
+        $this->regularityPlayers[] = $regularityPlayer;
 
         return $this;
     }
 
     /**
-     * Get rank
+     * Remove regularityPlayer
      *
-     * @return string
+     * @param \RegularityPlayerBundle\Entity\RegularityPlayer $regularityPlayer
      */
-    public function getRank()
+    public function removeRegularityPlayer(\RegularityPlayerBundle\Entity\RegularityPlayer $regularityPlayer)
     {
-        return $this->rank;
+        $this->regularityPlayers->removeElement($regularityPlayer);
+    }
+
+    /**
+     * Get regularityPlayers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRegularityPlayers()
+    {
+        return $this->regularityPlayers;
+    }
+
+    public function __toString()
+    {
+        return $this->level;
     }
 }

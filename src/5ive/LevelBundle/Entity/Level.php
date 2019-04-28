@@ -3,12 +3,16 @@
 namespace LevelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Level
  *
  * @ORM\Table(name="level")
  * @ORM\Entity(repositoryClass="LevelBundle\Repository\LevelRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class Level
 {
@@ -21,16 +25,11 @@ class Level
      */
     private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="label", type="string", length=100)
-     */
-    private $label;
-
 
     /**
      * @ORM\Column(type="integer", name="count_level")
+     * @JMS\Expose
+     * @JMS\Groups({"level"})
      */
     private $countLevel;
 
@@ -38,15 +37,37 @@ class Level
      * @var int
      *
      * @ORM\Column(name="degree_expe", type="integer")
+     * @JMS\Expose
+     * @JMS\Groups({"level"})
      */
     private $degreeExpe;
 
     /**
-     *@ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="level")
-     *@ORM\JoinColumn(name="users_id", referencedColumnName="id")
+     * @ORM\Column(type="string", name="rank", length=100)
+     * @JMS\Expose
+     * @JMS\Groups({"level"})
+     */
+    private $rank;
+
+    /**
+     * @ORM\Column(type="integer", name="count_yellow_card")
+     * @JMS\Expose
+     * @JMS\Groups({"level"})
+     */
+    private $countYellowCard;
+
+    /**
+     * @ORM\Column(type="integer", name="count_red_card")
+     * @JMS\Expose
+     * @JMS\Groups({"level"})
+     */
+    private $countRedCard;
+
+    /**
+     * @OneToOne(targetEntity="UserBundle\Entity\User", inversedBy="level")
+     * @JoinColumn(name="user_level_id", referencedColumnName="id")
      */
     private $users;
-
 
 
     /**
@@ -57,30 +78,6 @@ class Level
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set label
-     *
-     * @param string $label
-     *
-     * @return Level
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * Get label
-     *
-     * @return string
-     */
-    public function getLabel()
-    {
-        return $this->label;
     }
 
     /**
@@ -153,5 +150,85 @@ class Level
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Set rank
+     *
+     * @param string $rank
+     *
+     * @return Level
+     */
+    public function setRank($rank)
+    {
+        $this->rank = $rank;
+
+        return $this;
+    }
+
+    /**
+     * Get rank
+     *
+     * @return string
+     */
+    public function getRank()
+    {
+        return $this->rank;
+    }
+
+    /**
+     * Set countYellowCard
+     *
+     * @param integer $countYellowCard
+     *
+     * @return Level
+     */
+    public function setCountYellowCard($countYellowCard)
+    {
+        $this->countYellowCard = $countYellowCard;
+
+        return $this;
+    }
+
+    /**
+     * Get countYellowCard
+     *
+     * @return integer
+     */
+    public function getCountYellowCard()
+    {
+        return $this->countYellowCard;
+    }
+
+    /**
+     * Set countRedCard
+     *
+     * @param integer $countRedCard
+     *
+     * @return Level
+     */
+    public function setCountRedCard($countRedCard)
+    {
+        $this->countRedCard = $countRedCard;
+
+        return $this;
+    }
+
+    /**
+     * Get countRedCard
+     *
+     * @return integer
+     */
+    public function getCountRedCard()
+    {
+        return $this->countRedCard;
+    }
+
+    public function __toString()
+    {
+        if(is_null($this->rank)) {
+            return 'NULL';
+        }
+        return $this->rank;
     }
 }

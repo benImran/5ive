@@ -1,13 +1,14 @@
 imports:
-    - { resource: parameters.yml }
-    - { resource: security.yml }
-    - { resource: services.yml }
-    - { resource: "@GameBundle/Resources/config/services.yml" }
-    - { resource: "@UserBundle/Resources/config/services.yml" }
-    - { resource: "@AdminBundle/Resources/config/services.yml" }
-    - { resource: "@TeamBundle/Resources/config/services.yml" }
-    - { resource: "@LevelBundle/Resources/config/services.yml" }
-    - { resource: "@ApiBundle/Resources/config/services.yml" }
+- { resource: parameters.yml }
+- { resource: security.yml }
+- { resource: services.yml }
+- { resource: "@GameBundle/Resources/config/services.yml" }
+- { resource: "@UserBundle/Resources/config/services.yml" }
+- { resource: "@AdminBundle/Resources/config/services.yml" }
+- { resource: "@TeamBundle/Resources/config/services.yml" }
+- { resource: "@LevelBundle/Resources/config/services.yml" }
+- { resource: "@ApiBundle/Resources/config/services.yml" }
+- { resource: "@RegularityPlayerBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -56,7 +57,7 @@ doctrine:
         server_version: '5.6'
         charset: UTF8
         types:
-          json: Sonata\Doctrine\Types\JsonType
+            json: Sonata\Doctrine\Types\JsonType
 
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
@@ -93,24 +94,24 @@ sonata_block:
 # Sonata Media Bundle Configuration
 sonata_media:
     class:
-       media: Application\Sonata\MediaBundle\Entity\Media
-       gallery: Application\Sonata\MediaBundle\Entity\Gallery
-       gallery_has_media: Application\Sonata\MediaBundle\Entity\GalleryHasMedia
+        media: Application\Sonata\MediaBundle\Entity\Media
+        gallery: Application\Sonata\MediaBundle\Entity\Gallery
+        gallery_has_media: Application\Sonata\MediaBundle\Entity\GalleryHasMedia
 
     providers:
-      file:
-        allowed_extensions: ['csv', 'doc','docx', 'pdf', 'ppt', 'pptx', 'mp4', 'flv', 'xls', 'xlsx']
-        allowed_mime_types: ['text/csv', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/pdf','application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'video/mp4', 'video/x-flv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
-      image:
-        resizer: sonata.media.resizer.square
+        file:
+            allowed_extensions: ['csv', 'doc','docx', 'pdf', 'ppt', 'pptx', 'mp4', 'flv', 'xls', 'xlsx']
+            allowed_mime_types: ['text/csv', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/pdf','application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'video/mp4', 'video/x-flv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
+        image:
+            resizer: sonata.media.resizer.square
 
     db_driver: doctrine_orm
     default_context: default
     contexts:
         default:
             providers:
-                - sonata.media.provider.image
-                - sonata.media.provider.file
+            - sonata.media.provider.image
+            - sonata.media.provider.file
 
     cdn:
         server:

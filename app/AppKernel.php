@@ -30,7 +30,6 @@ class AppKernel extends Kernel
             new Sonata\MediaBundle\SonataMediaBundle(),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
-//            new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
 
             // FOSUser Bundle
              new FOS\UserBundle\FOSUserBundle(),
@@ -43,7 +42,7 @@ class AppKernel extends Kernel
             new GameBundle\GameBundle(),
             new UserBundle\UserBundle(),
             new AdminBundle\AdminBundle(),
-            new StatisticBundle\StatisticBundle(),
+            new RegularityPlayerBundle\RegularityPlayerBundle(),
             new LevelBundle\LevelBundle(),
             new TeamBundle\TeamBundle(),
             new ApiBundle\ApiBundle(),

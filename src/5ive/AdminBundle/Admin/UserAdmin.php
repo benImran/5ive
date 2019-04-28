@@ -12,9 +12,9 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class UserAdmin extends AbstractAdmin
 {
-
+//
     protected $baseRouteName = 'admin_user';
-
+//
     protected $baseRoutePattern = 'user';
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -58,14 +58,11 @@ class UserAdmin extends AbstractAdmin
             ->add('level', null, array(
                 'label'    => 'Niveau'
             ))
-            ->add('points', null, array(
-                'label'    => 'Points'
-            ))
-            ->add('regularityPlayer', null, array(
+            ->add('regularityPlayers', null, array(
                 'label'    => 'Régularité du joueur'
             ))
-            ->add('rank', null, array(
-                'label'    => 'Rang du joueur'
+            ->add('game', null, array(
+                'label'    => 'Matchs'
             ));
     }
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -80,20 +77,33 @@ class UserAdmin extends AbstractAdmin
             ->add('userCity', null, array('label' => 'Ville du joueur'))
             ->add('bio', null, array('label' => 'Biographie'))
             ->add('level', null, array('label' => 'Niveau'))
-            ->add('points', null, array('label' => 'Points'))
-            ->add('rank', null, array('label' => 'Rang du joueur'))
-            ->add('regularityPlayer', null, array('label' => 'Régularité du joueur'));
+            ->add('regularityPlayers', null, array('label' => 'Régularité du joueur'))
+            ->add('game', null, array('label' => 'Matchs'));
     }
     protected function configureListFields(ListMapper $listMapper)
     {
         unset($this->listModes['mosaic']);
         $listMapper
             ->addIdentifier('username', null, array('label' => 'Pseudo'))
+            ->addIdentifier('picture', 'sonata_type_model_list', array(
+                'label'   => 'Avatar',
+            ), array(
+                'link_parameters' => array(
+                    'context' => 'default'
+                )
+            ))
+            ->addIdentifier('email', null, array('label' => 'Email'))
+            ->addIdentifier('birth', null, array('label' => 'Date de naissance'))
+            ->addIdentifier('userCity', null, array('label' => 'Ville du joueur'))
+            ->addIdentifier('bio', null, array('label' => 'Biographie'))
+            ->addIdentifier('level', null, array('label' => 'Niveau'))
+            ->addIdentifier('regularityPlayers', null, array('label' => 'Régularité du joueur'))
+            ->addIdentifier('game', null, array('label' => 'Matchs'))
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => [],
                     'delete' => [],
-//                    'show' => []
+                    'show' => []
                 )
             ));
     }
