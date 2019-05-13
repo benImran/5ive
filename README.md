@@ -64,13 +64,13 @@
 	- Body de la requête pour lister les matchs :
 	```
 	{
-		"id":                [id du match],
-		"name":              [username du match],
-		"town":              [town du match]
-		"date":              [date du match]
-		"nbr_max_players":   [nbr_max_players de joueur pour le match]
-		"organisator":       [username de l'organisateur]
-        "users":             [username des joueurs associés ]
+            "id":                [id du match],
+            "name":              [username du match],
+            "town":              [town du match]
+            "date":              [date du match]
+            "nbr_max_players":   [nbr_max_players de joueur pour le match]
+            "organisator":       [username de l'organisateur]
+            "users":             [username des joueurs associés ]
 	}
 	```
 	- Exemple de la réponse (JSON) :
