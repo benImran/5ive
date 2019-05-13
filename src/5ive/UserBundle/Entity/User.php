@@ -32,13 +32,14 @@ class User extends BaseUser implements \Serializable
 
     /**
      * @ORM\Column(type="date", name="birth", nullable=true)
+     * @JMS\Groups({"profil"})
      */
     protected $birth;
 
     /**
      * @ORM\Column(type="text", name="bio", nullable=true)
      * @JMS\Expose
-     * @JMS\Groups({"level"})
+     * @JMS\Groups({"level","profilLevel","profil"})
      */
     protected $bio;
 
@@ -51,13 +52,13 @@ class User extends BaseUser implements \Serializable
     /**
      * @ORM\OneToOne(targetEntity="LevelBundle\Entity\Level", mappedBy="users")
      * @JMS\Expose
-     * @JMS\Groups({"level"})
+     * @JMS\Groups({"level","profilLevel"})
      */
     protected $level;
 
     /**
      * @JMS\Expose
-     * @JMS\Groups({"game","games","level"})
+     * @JMS\Groups({"game","games","level","profilLevel","profil"})
      * @var string
      */
     protected $username;
@@ -66,7 +67,7 @@ class User extends BaseUser implements \Serializable
     /**
      * @ORM\Column(type="string" , name="user_city", length=100, nullable=true)
      * @JMS\Expose
-     * @JMS\Groups({"level"})
+     * @JMS\Groups({"level","profilLevel","profil"})
      */
     protected $userCity;
 
@@ -77,8 +78,10 @@ class User extends BaseUser implements \Serializable
      */
     protected $teams;
 
+
     /**
-     * @ORM\OneToMany(targetEntity="RegularityPlayerBundle\Entity\RegularityPlayer", mappedBy="users")
+     *@ORM\ManyToOne(targetEntity="RegularityPlayerBundle\Entity\RegularityPlayer", inversedBy="users")
+     *@ORM\JoinColumn(name="regularityPlayers_id", referencedColumnName="id")
      */
     protected $regularityPlayers;
 
@@ -142,8 +145,6 @@ class User extends BaseUser implements \Serializable
         return $this->bio;
     }
 
-
-
     /**
      * Set userCity
      *
@@ -168,6 +169,29 @@ class User extends BaseUser implements \Serializable
         return $this->userCity;
     }
 
+    /**
+     * Set apiKey
+     *
+     * @param string $apiKey
+     *
+     * @return User
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * Get apiKey
+     *
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
 
     /**
      * Set picture
@@ -227,45 +251,24 @@ class User extends BaseUser implements \Serializable
         return $this->game;
     }
 
-
     /**
-     * Get statistic
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getStatistic()
-    {
-        return $this->statistic;
-    }
-
-    /**
-     * Add level
+     * Set level
      *
      * @param \LevelBundle\Entity\Level $level
      *
      * @return User
      */
-    public function addLevel(\LevelBundle\Entity\Level $level)
+    public function setLevel(\LevelBundle\Entity\Level $level = null)
     {
-        $this->level[] = $level;
+        $this->level = $level;
 
         return $this;
     }
 
     /**
-     * Remove level
-     *
-     * @param \LevelBundle\Entity\Level $level
-     */
-    public function removeLevel(\LevelBundle\Entity\Level $level)
-    {
-        $this->level->removeElement($level);
-    }
-
-    /**
      * Get level
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \LevelBundle\Entity\Level
      */
     public function getLevel()
     {
@@ -275,11 +278,11 @@ class User extends BaseUser implements \Serializable
     /**
      * Add team
      *
-     * @param \GameBundle\Entity\Game $team
+     * @param \TeamBundle\Entity\Team $team
      *
      * @return User
      */
-    public function addTeam(\GameBundle\Entity\Game $team)
+    public function addTeam(\TeamBundle\Entity\Team $team)
     {
         $this->teams[] = $team;
 
@@ -289,9 +292,9 @@ class User extends BaseUser implements \Serializable
     /**
      * Remove team
      *
-     * @param \GameBundle\Entity\Game $team
+     * @param \TeamBundle\Entity\Team $team
      */
-    public function removeTeam(\GameBundle\Entity\Game $team)
+    public function removeTeam(\TeamBundle\Entity\Team $team)
     {
         $this->teams->removeElement($team);
     }
@@ -307,35 +310,27 @@ class User extends BaseUser implements \Serializable
     }
 
     /**
-     * @return mixed
-     */
-    public function getApiKey()
-    {
-        return $this->apiKey;
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function generApiKey()
-    {
-        $this->apiKey = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');;
-    }
-
-
-
-    /**
-     * Set apiKey
+     * Set regularityPlayers
      *
-     * @param string $apiKey
+     * @param \RegularityPlayerBundle\Entity\RegularityPlayer $regularityPlayers
      *
      * @return User
      */
-    public function setApiKey($apiKey)
+    public function setRegularityPlayers(\RegularityPlayerBundle\Entity\RegularityPlayer $regularityPlayers = null)
     {
-        $this->apiKey = $apiKey;
+        $this->regularityPlayers = $regularityPlayers;
 
         return $this;
+    }
+
+    /**
+     * Get regularityPlayers
+     *
+     * @return \RegularityPlayerBundle\Entity\RegularityPlayer
+     */
+    public function getRegularityPlayers()
+    {
+        return $this->regularityPlayers;
     }
 
     /**
@@ -360,46 +355,5 @@ class User extends BaseUser implements \Serializable
     public function getUserOrganisator()
     {
         return $this->userOrganisator;
-    }
-
-
-
-    /**
-     * Add regularityPlayer
-     *
-     * @param \RegularityPlayerBundle\Entity\RegularityPlayer $regularityPlayer
-     *
-     * @return User
-     */
-    public function addRegularityPlayer(\RegularityPlayerBundle\Entity\RegularityPlayer $regularityPlayer)
-    {
-        $this->regularityPlayers[] = $regularityPlayer;
-
-        return $this;
-    }
-
-    /**
-     * Remove regularityPlayer
-     *
-     * @param \RegularityPlayerBundle\Entity\RegularityPlayer $regularityPlayer
-     */
-    public function removeRegularityPlayer(\RegularityPlayerBundle\Entity\RegularityPlayer $regularityPlayer)
-    {
-        $this->regularityPlayers->removeElement($regularityPlayer);
-    }
-
-    /**
-     * Get regularityPlayers
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getRegularityPlayers()
-    {
-        return $this->regularityPlayers;
-    }
-
-    public function __toString()
-    {
-        return $this->level;
     }
 }

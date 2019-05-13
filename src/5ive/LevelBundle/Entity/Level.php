@@ -29,37 +29,48 @@ class Level
     /**
      * @ORM\Column(type="integer", name="count_level")
      * @JMS\Expose
-     * @JMS\Groups({"level"})
+     * @JMS\Groups({"level","profilLevel"})
      */
-    private $countLevel;
+    private $countLevel = 1;
 
     /**
      * @var int
      *
      * @ORM\Column(name="degree_expe", type="integer")
      * @JMS\Expose
-     * @JMS\Groups({"level"})
+     * @JMS\Groups({"level","profilLevel"})
      */
     private $degreeExpe;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="degree_exp_max", type="integer")
+     * @JMS\Expose
+     * @JMS\Groups({"level","profilLevel"})
+     */
+    private $degreeExpMax = 200;
+
+
+
+    /**
      * @ORM\Column(type="string", name="rank", length=100)
      * @JMS\Expose
-     * @JMS\Groups({"level"})
+     * @JMS\Groups({"level","profilLevel"})
      */
     private $rank;
 
     /**
      * @ORM\Column(type="integer", name="count_yellow_card")
      * @JMS\Expose
-     * @JMS\Groups({"level"})
+     * @JMS\Groups({"level","profilLevel"})
      */
     private $countYellowCard;
 
     /**
      * @ORM\Column(type="integer", name="count_red_card")
      * @JMS\Expose
-     * @JMS\Groups({"level"})
+     * @JMS\Groups({"level","profilLevel"})
      */
     private $countRedCard;
 
@@ -230,5 +241,42 @@ class Level
             return 'NULL';
         }
         return $this->rank;
+    }
+
+    /**
+     * Set degreeExpMax
+     *
+     * @param integer $degreeExpMax
+     *
+     * @return Level
+     */
+    public function setDegreeExpMax($degreeExpMax)
+    {
+        $this->degreeExpMax = $degreeExpMax;
+
+        return $this;
+    }
+
+    /**
+     * Get degreeExpMax
+     *
+     * @return integer
+     */
+    public function getDegreeExpMax()
+    {
+        return $this->degreeExpMax;
+    }
+
+    public function rankName($level){
+        $rankName = 'Debutant';
+        if ($level >= 3 && $level < 6) {
+            ;
+            $rankName = 'Semi-Pro';
+        } elseif ($level >= 6) {
+            ;
+            $rankName = 'Pro';
+        }
+
+        $this->setRank($rankName);
     }
 }

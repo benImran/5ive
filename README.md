@@ -2,7 +2,7 @@
 
 ## Domain:
 
-**Base Url**: : http://five.cyril-vinikoff.fr/app_dev.php/
+**Base Url**: : http://five.cyril-vinikoff.fr
 
 **Backoffice**: : http://five.cyril-vinikoff.fr/app_dev.php/admin/dashboard
 
@@ -10,10 +10,9 @@
 
 🔑 [Authentication](#auth)
 
-😎 [Users](#users)
-
 ⚽️ [Game](#match)
 
+🏋🏽‍♂️ [Niveau](#level)
 
 <a id="auth"></a>
 ## Authentication
@@ -129,3 +128,5 @@
         }
     ]
     ```
+<a id="level"></a>
+## Level

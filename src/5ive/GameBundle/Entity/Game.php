@@ -80,8 +80,8 @@ class Game
 
     /**
      *
-     *@ORM\ManyToMany(targetEntity="UserBundle\Entity\User", inversedBy="game", fetch="EAGER")
-     *@JoinTable(name="users_game")
+     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User", inversedBy="game", fetch="EAGER")
+     * @JoinTable(name="users_game")
      * @JMS\Groups({"game","games"})
      * @JMS\Expose
      */

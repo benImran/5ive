@@ -29,16 +29,24 @@ class RegularityPlayer
     private $name;
 
     /**
-     *@ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="regularityPlayers")
-     *@ORM\JoinColumn(name="users_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="regularityPlayers")
      */
     private $users;
 
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -70,23 +78,33 @@ class RegularityPlayer
     }
 
     /**
-     * Set users
+     * Add user
      *
-     * @param \UserBundle\Entity\User $users
+     * @param \UserBundle\Entity\User $user
      *
      * @return RegularityPlayer
      */
-    public function setUsers(\UserBundle\Entity\User $users = null)
+    public function addUser(\UserBundle\Entity\User $user)
     {
-        $this->users = $users;
+        $this->users[] = $user;
 
         return $this;
     }
 
     /**
+     * Remove user
+     *
+     * @param \UserBundle\Entity\User $user
+     */
+    public function removeUser(\UserBundle\Entity\User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
      * Get users
      *
-     * @return \UserBundle\Entity\User
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUsers()
     {

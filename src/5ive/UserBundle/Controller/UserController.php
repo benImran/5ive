@@ -3,6 +3,7 @@
 namespace UserBundle\Controller;
 
 use Application\Sonata\MediaBundle\Entity\Media;
+use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -76,6 +77,7 @@ class UserController extends Controller
         }
     }
 
+
     /**
      * @Route("/api/signUp", name="loginTEST")
      * @param Request $request
@@ -124,5 +126,88 @@ class UserController extends Controller
         $res = $this->get('app.token.generator')->getTokenAction($user, $serializer);
 
         return $res;
+    }
+
+    /**
+     * @Route("/api/profil", name="profile")
+     * @return Response
+     */
+    public function profilAction()
+    {
+        $serializer = $this->get('jms_serializer');
+
+        $user = $serializer->serialize($this->getUser(), 'json', SerializationContext::create()->setGroups(array('profil')));
+
+        $response = new Response();
+        $response->setContent($user);
+
+        return $response;
+    }
+
+    /**
+     * @Route("/api/profilLevel", name="profile level")
+     * @return Response
+     */
+    public function profilLevelAction()
+    {
+        $serializer = $this->get('jms_serializer');
+
+        $user = $serializer->serialize($this->getUser(), 'json', SerializationContext::create()->setGroups(array('profilLevel')));
+
+        $response = new Response();
+        $response->setContent($user);
+
+        return $response;
+    }
+        /**
+         * @Route("/upExp/{id}", name="up_exp")
+         * @param User $user
+         */
+    public function upExpAction(User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $expwin = 30;
+        $levelUser = $user->getLevel();
+
+        $newExp = $levelUser->getDegreeExpe() + $expwin;
+
+
+        $levelUser->setDegreeExpe($newExp);
+
+        $em->persist($levelUser);
+        $em->flush();
+
+        dump($user->getLevel());
+        $this->levelUpAction($user->getId());
+        die;
+    }
+
+    public function levelUpAction($userId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $levelUpMultiple = 3;
+
+        $user = $em->getRepository(User::class)->find($userId);
+        $levelUser = $user->getLevel();
+
+        if ($levelUser->getDegreeExpe() >= $levelUser->getDegreeExpMax()){
+            $levelUp = $levelUser->getCountLevel() + 1;
+            $newExpMax = $levelUser->getDegreeExpMax() * $levelUpMultiple;
+
+            $levelUser->setCountLevel($levelUp);
+            $levelUser->setDegreeExpMax($newExpMax);
+            $levelUser->setDegreeExpe(0);
+            $levelUser->rankName($levelUp);
+            $em->persist($levelUser);
+            $em->flush();
+
+            $user = $em->getRepository(User::class)->find($userId);
+            dump($user->getLevel());
+
+
+        }
+
     }
 }

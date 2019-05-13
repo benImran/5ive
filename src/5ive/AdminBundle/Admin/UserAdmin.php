@@ -55,9 +55,6 @@ class UserAdmin extends AbstractAdmin
             ->add('bio', null, array(
                 'label'    => 'Biographie'
             ))
-            ->add('level', null, array(
-                'label'    => 'Niveau'
-            ))
             ->add('regularityPlayers', null, array(
                 'label'    => 'Régularité du joueur'
             ))
@@ -76,7 +73,6 @@ class UserAdmin extends AbstractAdmin
             ->add('birth', null, array('label' => 'Date de naissance'))
             ->add('userCity', null, array('label' => 'Ville du joueur'))
             ->add('bio', null, array('label' => 'Biographie'))
-            ->add('level', null, array('label' => 'Niveau'))
             ->add('regularityPlayers', null, array('label' => 'Régularité du joueur'))
             ->add('game', null, array('label' => 'Matchs'));
     }
@@ -96,14 +92,12 @@ class UserAdmin extends AbstractAdmin
             ->addIdentifier('birth', null, array('label' => 'Date de naissance'))
             ->addIdentifier('userCity', null, array('label' => 'Ville du joueur'))
             ->addIdentifier('bio', null, array('label' => 'Biographie'))
-            ->addIdentifier('level', null, array('label' => 'Niveau'))
-            ->addIdentifier('regularityPlayers', null, array('label' => 'Régularité du joueur'))
+            ->addIdentifier('regularityPlayers.name', null, array('label' => 'Régularité du joueur'))
             ->addIdentifier('game', null, array('label' => 'Matchs'))
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => [],
                     'delete' => [],
-                    'show' => []
                 )
             ));
     }
