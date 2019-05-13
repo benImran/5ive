@@ -130,3 +130,34 @@
     ```
 <a id="level"></a>
 ## Level
+- **Niveau par joueur :** POST `/api/profilLevel` :
+	- Body de la requête pour voir le niveau par joueur :
+	```
+	{
+        "username":          [username du joueur],
+        "level": {
+                             [count_level du joueur],
+                             [degree_expe du joueur],
+                             [degree_exp_max du joueur],
+                             [rank du joueur],
+                             [count_yellow_card du joueur],
+                             [count_red_card du joueur],
+                
+        }
+        
+    }
+    ```
+    - Exemple de la réponse (JSON) :
+    
+    ```
+    {
+        "username": "ben",
+        "level": {
+            "count_level": 3,
+            "degree_expe": 30,
+            "degree_exp_max": 1800,
+            "rank": "Semi-Pro",
+            "count_yellow_card": 0,
+            "count_red_card": 0
+        }
+    }
