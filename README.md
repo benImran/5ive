@@ -4,7 +4,7 @@
 
 **Base Url**: : http://five.cyril-vinikoff.fr
 
-**Backoffice**: : http://five.cyril-vinikoff.fr/app_dev.php/admin/dashboard
+**Backoffice**: : http://five.cyril-vinikoff.fr/admin/dashboard
 
 ## Sommaire:
 
