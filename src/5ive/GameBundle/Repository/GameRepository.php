@@ -10,4 +10,14 @@ namespace GameBundle\Repository;
  */
 class GameRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllGameBy($user)
+    {
+        $query = $this->createQueryBuilder('g')
+            ->join('g.users','u')
+            ->where('u.id = :user')
+            ->setParameter('user', $user)
+            ->getQuery();
+
+         return $query->getResult();
+    }
 }

@@ -1,7 +1,6 @@
-team:
-    resource: "@TeamBundle/Controller/"
-    type:     annotation
-    prefix:   /
+home:
+    path: /
+    defaults: { _controller: UserBundle:User:landingPage }
 
 level:
     resource: "@LevelBundle/Controller/"

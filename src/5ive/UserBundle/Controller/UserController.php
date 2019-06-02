@@ -3,7 +3,11 @@
 namespace UserBundle\Controller;
 
 use Application\Sonata\MediaBundle\Entity\Media;
+use GameBundle\Entity\Game;
 use JMS\Serializer\SerializationContext;
+use LevelBundle\Entity\Level;
+use LevelBundle\Entity\Rank;
+use RegularityPlayerBundle\Entity\RegularityPlayer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,6 +27,15 @@ class UserController extends Controller
     public function __construct(UserPasswordEncoder $encoder)
     {
         $this->encoder = $encoder;
+    }
+
+    /**
+     * @Route("/", name="landing_page")
+     */
+    public function landingPageAction()
+    {
+        return $this->render(':default:index.html.twig');
+
     }
 
 
@@ -57,21 +70,21 @@ class UserController extends Controller
 
         if (isset($username) || isset($password)) {
 
-        $user = $em->getRepository(User::class)
-            ->findOneBy([
-                'username' => $username
-            ]);
+            $user = $em->getRepository(User::class)
+                ->findOneBy([
+                    'username' => $username
+                ]);
 
-        if( $this->encoder->isPasswordValid($user,$password )){
-            $user->generApiKey();
+            if( $this->encoder->isPasswordValid($user,$password )){
+                $user->generApiKey();
 
-            $em->persist($user);
-            $em->flush();
+                $em->persist($user);
+                $em->flush();
 
-            $res = $this->get('app.token.generator')->getTokenAction($user, $serializer);
+                $res = $this->get('app.token.generator')->getTokenAction($user, $serializer);
 
-            return $res;
-        };
+                return $res;
+            };
         }else {
             return new Response('username ou password incorrect', 200);
         }
@@ -105,27 +118,111 @@ class UserController extends Controller
         if (!isset($birth) || empty($birth)){ return new Response('la date de naissance est manquante');}
         if (!isset($regularityPlayer) || empty($regularityPlayer)){ return new Response('fréquence de jeu est manquant');}
         if (!isset($userCity) || empty($userCity)){ return new Response('la ville est manquante');}
-        if (!isset($picture) || empty($picture)){ return new Response('la photo de profil est manquante');}
         if (!isset($password) || empty($password)){ return new Response('le mot de passe est manquant');}
 
+        $regularityPlayer= $this->getDoctrine()->getRepository(RegularityPlayer::class)->find($regularityPlayer);
         $user = new User();
 
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setBirth(new \DateTime($birth));
-        $user->setRegularityPlayer($regularityPlayer);
+        $user->setRegularityPlayers($regularityPlayer);
         $user->setUserCity($userCity);
-        $user->setPicture($media);
+        if (!isset($picture) || empty($picture)){
+            $user->setPicture($media);
+        }
         $user->setPassword($encoder->encodePassword($user,$password));
+        $user->setEnabled(true);
         $user->generApiKey();
 
         $em->persist($user);
+
+        $level = new Level();
+        $rank = $this->getDoctrine()
+            ->getRepository(Rank::class)
+            ->findRankBy($level->setCountLevel());
+        $level->setRank($rank);
+        $level->setUsers($user);
+
+        $em->persist($level);
         $em->flush();
         $serializer = $this->get('jms_serializer');
 
         $res = $this->get('app.token.generator')->getTokenAction($user, $serializer);
 
         return $res;
+    }
+
+    /**
+     * @Route("/api/editProfil", name="edit_profil")
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
+     */
+    public function editProfilAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+
+        $encoder = $this->encoder;
+        $media = $this->getDoctrine()->getRepository(Media::class)->find(1);
+        //$media->set('testimg');
+        $username = $request->request->get('username');
+        $email = $request->request->get('email');
+        $birth = str_replace('/', '.', $request->request->get('birth'));
+        $regularityPlayer = $request->request->get('regularityPlayer');
+        $userCity = $request->request->get('userCity');
+        $picture = $request->files->get('picture');
+        $password = $request->request->get('password');
+
+        /*  dump($username);
+          dump(isset($username));
+          dump(!empty($username));
+          dump($email);
+          dump(isset($email));
+          dump(!empty($email));
+          die;*/
+        if (isset($username) || !empty($username)){
+            dump($username);
+            dump($user);
+            die;
+            $user->setUsername($username);
+        }
+        if (isset($email) || !empty($email)){
+            $user->setEmail($email);
+        }
+        if (isset($birth) || !empty($birth)){
+            $user->setBirth(new \DateTime($birth));
+        }
+        if (isset($regularityPlayer) || !empty($regularityPlayer)){
+            $regularityPlayer= $this->getDoctrine()->getRepository(RegularityPlayer::class)->find($regularityPlayer);
+            $user->setRegularityPlayers($regularityPlayer);
+        }
+        if (isset($userCity) || !empty($userCity)){
+            $user->setUserCity($userCity);
+        }
+        if (isset($password) || !empty($password)){
+            $user->setPassword($encoder->encodePassword($user,$password));
+        }
+        if (!isset($picture) || empty($picture)){
+            $user->setPicture($picture);
+        }
+
+        $em->persist($user);
+        $em->flush();
+
+        $serializer = $this->get('jms_serializer');
+
+//        $res = $this->get('app.token.generator')->getTokenAction($user, $serializer);
+
+        $user = $serializer->serialize($this->getUser(), 'json', SerializationContext::create()->setGroups(array('profil')));
+
+        $response = new Response();
+        $response->setContent($user);
+
+        return $response;
+
     }
 
     /**
@@ -144,6 +241,8 @@ class UserController extends Controller
         return $response;
     }
 
+
+
     /**
      * @Route("/api/profilLevel", name="profile level")
      * @return Response
@@ -159,55 +258,79 @@ class UserController extends Controller
 
         return $response;
     }
-        /**
-         * @Route("/upExp/{id}", name="up_exp")
-         * @param User $user
-         */
-    public function upExpAction(User $user)
+
+    /**
+     * @Route("/api/upMatch", name="up_match")
+     * @param Request $request
+     * @return Response
+     */
+    public function upMatch(Request $request)
     {
+        $user = $this->getUser();
+
         $em = $this->getDoctrine()->getManager();
 
-        $expwin = 30;
         $levelUser = $user->getLevel();
 
-        $newExp = $levelUser->getDegreeExpe() + $expwin;
+        $newMatch = $levelUser->getCountMatch() + 1;
 
-
-        $levelUser->setDegreeExpe($newExp);
+        $levelUser->setCountMatch($newMatch);
 
         $em->persist($levelUser);
         $em->flush();
 
-        dump($user->getLevel());
-        $this->levelUpAction($user->getId());
-        die;
+        $this->rankUpAction($user->getId());
+
+        return new Response('Good');
     }
 
-    public function levelUpAction($userId)
+    public function rankUpAction($userId)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $levelUpMultiple = 3;
 
         $user = $em->getRepository(User::class)->find($userId);
         $levelUser = $user->getLevel();
 
-        if ($levelUser->getDegreeExpe() >= $levelUser->getDegreeExpMax()){
-            $levelUp = $levelUser->getCountLevel() + 1;
-            $newExpMax = $levelUser->getDegreeExpMax() * $levelUpMultiple;
+        $match = $levelUser->getCountMatch();
+        $rank = $this->getDoctrine()->getRepository(Rank::class)->findRankBy($match);
+        $levelUser->setRank($rank);
+        $em->persist($levelUser);
+        $em->flush();
+    }
 
-            $levelUser->setCountLevel($levelUp);
-            $levelUser->setDegreeExpMax($newExpMax);
-            $levelUser->setDegreeExpe(0);
-            $levelUser->rankName($levelUp);
-            $em->persist($levelUser);
-            $em->flush();
 
-            $user = $em->getRepository(User::class)->find($userId);
-            dump($user->getLevel());
+    /**
+     * @Route("/api/ratePlayers", name="api_rate_players")
+     * @param Request $request
+     * @return Response
+     */
+    public function ratePlayersAction(Request $request)
+    {
+        $usersData = $request->get('users');
 
+//        return new JsonResponse($usersData);
+
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        foreach ($usersData as $userData) {
+
+            $user = $this->getDoctrine()->getRepository(User::class)->find($userData['id']);
+
+            $level = $user->getLevel();
+
+            $userLevel = $userData['level'];
+            $level->setAttaque($userLevel['attaque']);
+            $level->setDefense($userLevel['defense']);
+            $level->setGardien($userLevel['gardien']);
+            $em->persist($level);
 
         }
 
+        $em->flush();
+
+        return new Response('ok');
     }
+
 }

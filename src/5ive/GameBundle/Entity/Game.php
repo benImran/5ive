@@ -55,13 +55,6 @@ class Game
     private $date;
 
     /**
-     * @ORM\Column(type="array", name="chat")
-     * @JMS\Groups({"game","games"})
-     * @JMS\Expose
-     */
-    private $chat;
-
-    /**
      * @var string
      * @ORM\Column(name="nbr_max_players", type="integer")
      * @JMS\Groups({"game","games"})
@@ -71,7 +64,7 @@ class Game
 
     /**
      * One gameOrganisator has One user.
-     * @OneToOne(targetEntity="UserBundle\Entity\User", inversedBy="userOrganisator")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="userOrganisator")
      * @JoinColumn(name="user_organisator_id", referencedColumnName="id")
      * @JMS\Groups({"game","games"})
      * @JMS\Expose
@@ -211,29 +204,7 @@ class Game
         return $this->users;
     }
 
-    /**
-     * Set chat
-     *
-     * @param array $chat
-     *
-     * @return Game
-     */
-    public function setChat($chat)
-    {
-        $this->chat = $chat;
 
-        return $this;
-    }
-
-    /**
-     * Get chat
-     *
-     * @return array
-     */
-    public function getChat()
-    {
-        return $this->chat;
-    }
 
     /**
      * @return mixed
@@ -279,6 +250,10 @@ class Game
 
     public function __toString()
     {
+        if(is_null($this->name)) {
+            return 'NULL';
+        }
+
         return $this->name;
     }
 }

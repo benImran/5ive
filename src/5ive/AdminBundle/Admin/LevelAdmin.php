@@ -20,38 +20,30 @@ class LevelAdmin extends AbstractAdmin {
             ->add('rank', null, array(
                 'label'    => 'Rang du joueur'
             ))
-            ->add('countLevel', null, array(
+            ->add('countMatch', null, array(
                 'label'    => 'Palier'
             ))
-            ->add('degreeExpe', null,array(
-                'label' => 'Point experience'
-            ))
-            ->add('countYellowCard', null,array(
-                'label' => 'Carton jaune'
-            ))
-            ->add('countRedCard', null,array(
-                'label' => 'Carton rouge'
-            ));
+            ->add('users', null,array(
+                'label' => 'Joueur'
+            ));;
+
 
     }
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
             ->add('rank', null, array('label' => 'Rang du joueur'))
-            ->add('countLevel', null, array('label' => 'Palier'))
-            ->add('degreeExpe', null, array('label' => 'Point experience'))
-            ->add('countYellowCard', null, array('label' => 'Point experience'))
-            ->add('countRedCard', null, array('label' => 'Point experience'));
+            ->add('countMatch', null, array('label' => 'Palier'))
+            ->add('users', null, array('label' => 'Joueur'));
+
     }
     protected function configureListFields(ListMapper $listMapper)
     {
         unset($this->listModes['mosaic']);
         $listMapper
             ->addIdentifier('rank', null, array('label' => 'Rang du joueur'))
-            ->addIdentifier('countLevel', null, array('label' => 'Palier'))
-            ->addIdentifier('degreeExpe', null, array('label' => 'Point experience'))
-            ->addIdentifier('countYellowCard', null, array('label' => 'Carton jaune'))
-            ->addIdentifier('countRedCard', null, array('label' => 'Carton rouge'))
+            ->addIdentifier('countMatch', null, array('label' => 'Palier'))
+            ->addIdentifier('users', null, array('label' => 'Joueur'))
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => [],

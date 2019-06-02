@@ -1,6 +1,6 @@
 <?php
 
-namespace RegularityBundle\Repository;
+namespace RegularityPlayerBundle\Repository;
 
 /**
  * RegularityPlayerRepository

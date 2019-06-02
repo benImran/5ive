@@ -29,32 +29,14 @@ class Level
     /**
      * @ORM\Column(type="integer", name="count_level")
      * @JMS\Expose
-     * @JMS\Groups({"level","profilLevel"})
+     * @JMS\Groups({"game","games","level","profilLevel","profil"})
      */
-    private $countLevel = 1;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="degree_expe", type="integer")
-     * @JMS\Expose
-     * @JMS\Groups({"level","profilLevel"})
-     */
-    private $degreeExpe;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="degree_exp_max", type="integer")
-     * @JMS\Expose
-     * @JMS\Groups({"level","profilLevel"})
-     */
-    private $degreeExpMax = 200;
-
+    private $countMatch = 0;
 
 
     /**
-     * @ORM\Column(type="string", name="rank", length=100)
+     *@ORM\ManyToOne(targetEntity="LevelBundle\Entity\Rank", inversedBy="levels")
+     *@ORM\JoinColumn(name="rank_id", referencedColumnName="id")
      * @JMS\Expose
      * @JMS\Groups({"level","profilLevel"})
      */
@@ -65,20 +47,45 @@ class Level
      * @JMS\Expose
      * @JMS\Groups({"level","profilLevel"})
      */
-    private $countYellowCard;
+    private $countYellowCard = 0;
 
     /**
      * @ORM\Column(type="integer", name="count_red_card")
      * @JMS\Expose
      * @JMS\Groups({"level","profilLevel"})
      */
-    private $countRedCard;
+    private $countRedCard = 0;
+
+    /**
+     * @ORM\Column(type="integer", name="attaque")
+     * @JMS\Expose
+     * @JMS\Groups({"level","profilLevel", "games", "game"})
+     */
+    private $attaque = 0;
+
+    /**
+     * @ORM\Column(type="integer", name="defense")
+     * @JMS\Expose
+     * @JMS\Groups({"level","profilLevel", "games", "game"})
+     */
+    private $defense = 0;
+
+    /**
+     * @ORM\Column(type="integer", name="gardien")
+     * @JMS\Expose
+     * @JMS\Groups({"level","profilLevel", "games", "game"})
+     */
+    private $gardien = 0;
 
     /**
      * @OneToOne(targetEntity="UserBundle\Entity\User", inversedBy="level")
      * @JoinColumn(name="user_level_id", referencedColumnName="id")
      */
     private $users;
+
+
+
+
 
 
     /**
@@ -92,99 +99,27 @@ class Level
     }
 
     /**
-     * Set countLevel
+     * Set countMatch
      *
-     * @param integer $countLevel
+     * @param integer $countMatch
      *
      * @return Level
      */
-    public function setCountLevel($countLevel)
+    public function setCountMatch($countMatch)
     {
-        $this->countLevel = $countLevel;
+        $this->countMatch = $countMatch;
 
         return $this;
     }
 
     /**
-     * Get countLevel
+     * Get countMatch
      *
      * @return integer
      */
-    public function getCountLevel()
+    public function getCountMatch()
     {
-        return $this->countLevel;
-    }
-
-    /**
-     * Set degreeExpe
-     *
-     * @param integer $degreeExpe
-     *
-     * @return Level
-     */
-    public function setDegreeExpe($degreeExpe)
-    {
-        $this->degreeExpe = $degreeExpe;
-
-        return $this;
-    }
-
-    /**
-     * Get degreeExpe
-     *
-     * @return integer
-     */
-    public function getDegreeExpe()
-    {
-        return $this->degreeExpe;
-    }
-
-    /**
-     * Set users
-     *
-     * @param \UserBundle\Entity\User $users
-     *
-     * @return Level
-     */
-    public function setUsers(\UserBundle\Entity\User $users = null)
-    {
-        $this->users = $users;
-
-        return $this;
-    }
-
-    /**
-     * Get users
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    /**
-     * Set rank
-     *
-     * @param string $rank
-     *
-     * @return Level
-     */
-    public function setRank($rank)
-    {
-        $this->rank = $rank;
-
-        return $this;
-    }
-
-    /**
-     * Get rank
-     *
-     * @return string
-     */
-    public function getRank()
-    {
-        return $this->rank;
+        return $this->countMatch;
     }
 
     /**
@@ -235,48 +170,123 @@ class Level
         return $this->countRedCard;
     }
 
-    public function __toString()
-    {
-        if(is_null($this->rank)) {
-            return 'NULL';
-        }
-        return $this->rank;
-    }
-
     /**
-     * Set degreeExpMax
+     * Set attaque
      *
-     * @param integer $degreeExpMax
+     * @param integer $attaque
      *
      * @return Level
      */
-    public function setDegreeExpMax($degreeExpMax)
+    public function setAttaque($attaque)
     {
-        $this->degreeExpMax = $degreeExpMax;
+        $this->attaque = $attaque;
 
         return $this;
     }
 
     /**
-     * Get degreeExpMax
+     * Get attaque
      *
      * @return integer
      */
-    public function getDegreeExpMax()
+    public function getAttaque()
     {
-        return $this->degreeExpMax;
+        return $this->attaque;
     }
 
-    public function rankName($level){
-        $rankName = 'Debutant';
-        if ($level >= 3 && $level < 6) {
-            ;
-            $rankName = 'Semi-Pro';
-        } elseif ($level >= 6) {
-            ;
-            $rankName = 'Pro';
-        }
+    /**
+     * Set defense
+     *
+     * @param integer $defense
+     *
+     * @return Level
+     */
+    public function setDefense($defense)
+    {
+        $this->defense = $defense;
 
-        $this->setRank($rankName);
+        return $this;
+    }
+
+    /**
+     * Get defense
+     *
+     * @return integer
+     */
+    public function getDefense()
+    {
+        return $this->defense;
+    }
+
+    /**
+     * Set gardien
+     *
+     * @param integer $gardien
+     *
+     * @return Level
+     */
+    public function setGardien($gardien)
+    {
+        $this->gardien = $gardien;
+
+        return $this;
+    }
+
+    /**
+     * Get gardien
+     *
+     * @return integer
+     */
+    public function getGardien()
+    {
+        return $this->gardien;
+    }
+
+    /**
+     * Set rank
+     *
+     * @param \LevelBundle\Entity\Rank $rank
+     *
+     * @return Level
+     */
+    public function setRank(\LevelBundle\Entity\Rank $rank = null)
+    {
+        $this->rank = $rank;
+
+        return $this;
+    }
+
+    /**
+     * Get rank
+     *
+     * @return \LevelBundle\Entity\Rank
+     */
+    public function getRank()
+    {
+        return $this->rank;
+    }
+
+    /**
+     * Set users
+     *
+     * @param \UserBundle\Entity\User $users
+     *
+     * @return Level
+     */
+    public function setUsers(\UserBundle\Entity\User $users = null)
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+
+    /**
+     * Get users
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

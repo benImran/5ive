@@ -2,8 +2,6 @@
 
 namespace UserBundle\Entity;
 
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\OneToOne;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
@@ -19,13 +17,15 @@ class User extends BaseUser implements \Serializable
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Groups({"game","games"})
      * @JMS\Expose
      */
     protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media" )
-     * @ORM\JoinColumn(name="picture_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="picture_id", referencedColumnName="id", nullable=true)
+     * @JMS\Groups({"game","games","profilLevel","profil"})
      *
      */
     protected $picture;
@@ -52,7 +52,7 @@ class User extends BaseUser implements \Serializable
     /**
      * @ORM\OneToOne(targetEntity="LevelBundle\Entity\Level", mappedBy="users")
      * @JMS\Expose
-     * @JMS\Groups({"level","profilLevel"})
+     * @JMS\Groups({"game","games","level","profilLevel","profil"})
      */
     protected $level;
 
@@ -73,15 +73,10 @@ class User extends BaseUser implements \Serializable
 
 
     /**
-     *@ORM\ManyToMany(targetEntity="TeamBundle\Entity\Team", inversedBy="players")
-     *@JoinTable(name="users_teams")
-     */
-    protected $teams;
-
-
-    /**
      *@ORM\ManyToOne(targetEntity="RegularityPlayerBundle\Entity\RegularityPlayer", inversedBy="users")
      *@ORM\JoinColumn(name="regularityPlayers_id", referencedColumnName="id")
+     * @JMS\Expose
+     * @JMS\Groups({"game","games","level","profilLevel","profil"})
      */
     protected $regularityPlayers;
 
@@ -92,7 +87,7 @@ class User extends BaseUser implements \Serializable
 
     /**
      * One Customer has One Cart.
-     * @OneToOne(targetEntity="GameBundle\Entity\Game", mappedBy="organisator")
+     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Game", mappedBy="organisator")
      */
     private $userOrganisator;
 
@@ -226,6 +221,7 @@ class User extends BaseUser implements \Serializable
      */
     public function addGame(\GameBundle\Entity\Game $game)
     {
+        $game->addUser($this);
         $this->game[] = $game;
 
         return $this;
@@ -238,7 +234,7 @@ class User extends BaseUser implements \Serializable
      */
     public function removeGame(\GameBundle\Entity\Game $game)
     {
-        $this->game->removeElement($game);
+        $game->removeUser($this);
     }
 
     /**
@@ -275,39 +271,6 @@ class User extends BaseUser implements \Serializable
         return $this->level;
     }
 
-    /**
-     * Add team
-     *
-     * @param \TeamBundle\Entity\Team $team
-     *
-     * @return User
-     */
-    public function addTeam(\TeamBundle\Entity\Team $team)
-    {
-        $this->teams[] = $team;
-
-        return $this;
-    }
-
-    /**
-     * Remove team
-     *
-     * @param \TeamBundle\Entity\Team $team
-     */
-    public function removeTeam(\TeamBundle\Entity\Team $team)
-    {
-        $this->teams->removeElement($team);
-    }
-
-    /**
-     * Get teams
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTeams()
-    {
-        return $this->teams;
-    }
 
     /**
      * Set regularityPlayers
@@ -355,5 +318,13 @@ class User extends BaseUser implements \Serializable
     public function getUserOrganisator()
     {
         return $this->userOrganisator;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function generApiKey()
+    {
+        $this->apiKey = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');;
     }
 }

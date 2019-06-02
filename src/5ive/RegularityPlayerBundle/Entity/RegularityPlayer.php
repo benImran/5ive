@@ -3,12 +3,13 @@
 namespace RegularityPlayerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Entity
  *
- * @ORM\Table(name="entity")
- * @ORM\Entity(repositoryClass="RegularityPlayerBundle\Repository\EntityRepository")
+ * @ORM\Table(name="regularity_player")
+ * @ORM\Entity(repositoryClass="RegularityPlayerBundle\Repository\RegularityPlayerRepository")
  */
 class RegularityPlayer
 {
@@ -17,6 +18,8 @@ class RegularityPlayer
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @JMS\Expose
+     * @JMS\Groups({"list"})
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -25,6 +28,8 @@ class RegularityPlayer
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100)
+     * @JMS\Expose
+     * @JMS\Groups({"game","games","level","profilLevel","profil", "list"})
      */
     private $name;
 

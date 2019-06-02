@@ -12,7 +12,6 @@
             "UserBundle\\": "src/5ive/UserBundle",
             "RegularityPlayerBundle\\": "src/5ive/RegularityPlayerBundle",
             "LevelBundle\\": "src/5ive/LevelBundle",
-            "TeamBundle\\": "src/5ive/TeamBundle",
             "ApiBundle\\": "src/5ive/ApiBundle",
             "Application\\": "src/Application"
         },
@@ -24,6 +23,7 @@
     },
     "require": {
         "php": ">=5.5.9",
+        "coresphere/console-bundle": "^0.5.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "friendsofsymfony/rest-bundle": ">=2.5 <3.0.0",

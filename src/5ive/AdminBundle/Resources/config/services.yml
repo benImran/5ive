@@ -19,4 +19,8 @@ services:
         arguments: [~, RegularityPlayerBundle\Entity\RegularityPlayer, ~]
         tags:
         - { name: sonata.admin, manager_type: orm, label: Régularité du joueur, group: "Régularité du joueur", on_top: true, icon: '<i class="fa fa-users"></i>' }
-
+    admin.rank:
+        class: AdminBundle\Admin\RankAdmin
+        arguments: [~, LevelBundle\Entity\Rank, ~]
+        tags:
+        - { name: sonata.admin, manager_type: orm, label: Rang du joueur, group: "Rang du joueur", on_top: true, icon: '<i class="fa fa-users"></i>' }

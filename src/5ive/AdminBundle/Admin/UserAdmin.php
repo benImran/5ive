@@ -32,8 +32,10 @@ class UserAdmin extends AbstractAdmin
             ))
             ->add('email', null, array(
                 'label'    => 'Email'
-            ))
-            ->add('plainPassword', RepeatedType::class, array(
+            ));
+
+        if  (!$this->getSubject()->getId()) {
+            $formMapper->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'options' => array(
                     'translation_domain' => 'FOSUserBundle',
@@ -44,11 +46,12 @@ class UserAdmin extends AbstractAdmin
                 'first_options' => array('label' => 'form.password'),
                 'second_options' => array('label' => 'form.password_confirmation'),
                 'invalid_message' => 'fos_user.password.mismatch',
-            ))
-            ->add('birth', DateType::class, array(
-                'label'    => 'Date de naissance',
-                'widget'   => 'single_text'
-            ))
+            ));
+        }
+        $formMapper->add('birth', DateType::class, array(
+            'label'    => 'Date de naissance',
+            'widget'   => 'single_text'
+        ))
             ->add('userCity', null, array(
                 'label'    => 'Ville du joueur'
             ))
@@ -58,9 +61,21 @@ class UserAdmin extends AbstractAdmin
             ->add('regularityPlayers', null, array(
                 'label'    => 'Régularité du joueur'
             ))
-            ->add('game', null, array(
-                'label'    => 'Matchs'
-            ));
+            ->add('game', 'sonata_type_model', array(
+                'label'    => 'Matchs',
+                'by_reference' => false,
+                'multiple' => true,
+                'btn_add' => false
+            ))
+            ->add('level', 'sonata_type_model_list',[
+                'btn_add'       => 'Add level',
+                'btn_list'      => true,      //which will be translated
+                'btn_delete'    => false,              //or hide the button.
+                'btn_edit'      => false,             //Hide add and show edit button when value is set
+                'btn_catalogue' => false
+            ], [
+                'placeholder' => 'No author selected',
+            ]);
     }
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
@@ -74,7 +89,8 @@ class UserAdmin extends AbstractAdmin
             ->add('userCity', null, array('label' => 'Ville du joueur'))
             ->add('bio', null, array('label' => 'Biographie'))
             ->add('regularityPlayers', null, array('label' => 'Régularité du joueur'))
-            ->add('game', null, array('label' => 'Matchs'));
+            ->add('game', null, array('label' => 'Matchs'))
+        ;
     }
     protected function configureListFields(ListMapper $listMapper)
     {
