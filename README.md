@@ -167,8 +167,57 @@
 - **Création des matchs :** POST `/api/newMatch` :
 	- Body de la requête pour créer les matchs :
 	```
+	```
+    - Exemple de la réponse (JSON) :
+    ```
+	{
+        "id": 29,
+        "name": "test",
+        "town": "Marseille",
+        "date": "2019-05-16T00:00:00+02:00",
+        "nbr_max_players": 10,
+        "organisator": {
+            "id": 31,
+            "username": "Seb_SRFC",
+            "level": {
+                "count_match": 2,
+                "rank": {
+                    "name": "Debutant"
+                },
+                "count_yellow_card": 2,
+                "count_red_card": 2,
+                "attaque": 13,
+                "defense": 6,
+                "gardien": 4
+            },
+            "regularity_players": ""
+        },
+        "is_end": true,
+        "users": [
+            {
+                "id": 31,
+                "username": "Seb_SRFC",
+                "level": {
+                    "count_match": 2,
+                    "rank": {
+                        "name": "Debutant"
+                    },
+                    "count_yellow_card": 2,
+                    "count_red_card": 2,
+                    "attaque": 13,
+                    "defense": 6,
+                    "gardien": 4
+                },
+                "regularity_players": ""
+            }
+        ]
+    }
 	
     ```
+    
+- **Rejoindre des matchs :** POST `/api/newMatch` :
+	- Body de la requête pour créer les matchs :
+	```
 <a id="level"></a>
 ## Level
 - **Niveau par joueur :** POST `/api/profilLevel` :
@@ -202,3 +251,5 @@
             "count_red_card": 0
         }
     }
+    
+    ```
