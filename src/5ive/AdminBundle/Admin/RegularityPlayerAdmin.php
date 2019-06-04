@@ -33,6 +33,7 @@ class RegularityPlayerAdmin extends AbstractAdmin {
     {
         unset($this->listModes['mosaic']);
         $listMapper
+            ->addIdentifier('id', null, array('label' => 'Id'))
             ->addIdentifier('name', null, array('label' => 'Régularité de jeu'))
             ->add('_action', 'actions', array(
                 'actions' => array(

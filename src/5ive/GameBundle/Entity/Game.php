@@ -72,6 +72,13 @@ class Game
     private $organisator;
 
     /**
+     * @ORM\Column(name="is_end", type="boolean", options={"default":0})
+     * @JMS\Expose
+     * @JMS\Groups({"game","games","level","profilLevel","profil"})
+     */
+    private $isEnd = false;
+
+    /**
      *
      * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User", inversedBy="game", fetch="EAGER")
      * @JoinTable(name="users_game")
@@ -79,6 +86,13 @@ class Game
      * @JMS\Expose
      */
     private $users;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Rate", mappedBy="game")
+     * @JMS\Expose
+     * @JMS\Groups({"game","games","level","profilLevel","profil"})
+     */
+    private $rate;
 
 
     /**
@@ -255,5 +269,63 @@ class Game
         }
 
         return $this->name;
+    }
+
+    /**
+     * Set isEnd
+     *
+     * @param boolean $isEnd
+     *
+     * @return Game
+     */
+    public function setIsEnd($isEnd)
+    {
+        $this->isEnd = $isEnd;
+
+        return $this;
+    }
+
+    /**
+     * Get isEnd
+     *
+     * @return boolean
+     */
+    public function getIsEnd()
+    {
+        return $this->isEnd;
+    }
+
+    /**
+     * Add rate
+     *
+     * @param \GameBundle\Entity\Rate $rate
+     *
+     * @return Game
+     */
+    public function addRate(\GameBundle\Entity\Rate $rate)
+    {
+        $this->rate[] = $rate;
+
+        return $this;
+    }
+
+    /**
+     * Remove rate
+     *
+     * @param \GameBundle\Entity\Rate $rate
+     */
+    public function removeRate(\GameBundle\Entity\Rate $rate)
+    {
+        $this->rate->removeElement($rate);
+    }
+
+    /**
+     * Get rate
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRate()
+    {
+        return $this->rate;
     }
 }

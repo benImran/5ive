@@ -29,6 +29,8 @@ class Rank
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100)
+     * @JMS\Expose
+     * @JMS\Groups({"game","games","level","profilLevel","profil"})
      */
     private $name;
 
@@ -39,8 +41,6 @@ class Rank
 
     /**
      * @ORM\Column(type="integer", name="count_match")
-     * @JMS\Expose
-     * @JMS\Groups({"game","games","level","profilLevel","profil"})
      */
     private $countMatch;
     /**
@@ -147,6 +147,10 @@ class Rank
 
     public function __toString()
     {
+        if(is_null($this->name)) {
+            return 'NULL';
+        }
+
         return $this->name;
     }
 }

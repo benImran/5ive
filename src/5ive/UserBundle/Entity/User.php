@@ -93,6 +93,13 @@ class User extends BaseUser implements \Serializable
 
 
     /**
+     * @ORM\OneToMany(targetEntity="GameBundle\Entity\Rate", mappedBy="users")
+     */
+    private $rate;
+
+
+
+    /**
      * Set birth
      *
      * @param \DateTime $birth
@@ -326,5 +333,63 @@ class User extends BaseUser implements \Serializable
     public function generApiKey()
     {
         $this->apiKey = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');;
+    }
+
+    /**
+     * Add userOrganisator
+     *
+     * @param \GameBundle\Entity\Game $userOrganisator
+     *
+     * @return User
+     */
+    public function addUserOrganisator(\GameBundle\Entity\Game $userOrganisator)
+    {
+        $this->userOrganisator[] = $userOrganisator;
+
+        return $this;
+    }
+
+    /**
+     * Remove userOrganisator
+     *
+     * @param \GameBundle\Entity\Game $userOrganisator
+     */
+    public function removeUserOrganisator(\GameBundle\Entity\Game $userOrganisator)
+    {
+        $this->userOrganisator->removeElement($userOrganisator);
+    }
+
+    /**
+     * Add rate
+     *
+     * @param \GameBundle\Entity\Rate $rate
+     *
+     * @return User
+     */
+    public function addRate(\GameBundle\Entity\Rate $rate)
+    {
+        $this->rate[] = $rate;
+
+        return $this;
+    }
+
+    /**
+     * Remove rate
+     *
+     * @param \GameBundle\Entity\Rate $rate
+     */
+    public function removeRate(\GameBundle\Entity\Rate $rate)
+    {
+        $this->rate->removeElement($rate);
+    }
+
+    /**
+     * Get rate
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRate()
+    {
+        return $this->rate;
     }
 }

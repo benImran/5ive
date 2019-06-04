@@ -106,6 +106,7 @@ class GameApiController extends Controller
         $game->setNbrMaxPlayers($nbrMaxPlayers);
         $game->setTown($town);
         $game->setOrganisator($this->getUser());
+        $game->setIsEnd(1);
         $game->addUser($this->getUser());
 
         $em->persist($game);

@@ -4,6 +4,7 @@ namespace UserBundle\Controller;
 
 use Application\Sonata\MediaBundle\Entity\Media;
 use GameBundle\Entity\Game;
+use GameBundle\Entity\Rate;
 use JMS\Serializer\SerializationContext;
 use LevelBundle\Entity\Level;
 use LevelBundle\Entity\Rank;
@@ -140,7 +141,7 @@ class UserController extends Controller
         $level = new Level();
         $rank = $this->getDoctrine()
             ->getRepository(Rank::class)
-            ->findRankBy($level->setCountLevel());
+            ->findRankBy($level->getCountMatch());
         $level->setRank($rank);
         $level->setUsers($user);
 
@@ -259,14 +260,42 @@ class UserController extends Controller
         return $response;
     }
 
+
     /**
-     * @Route("/api/upMatch", name="up_match")
+     * @Route("/api/endMatch", name="end_match")
      * @param Request $request
      * @return Response
      */
-    public function upMatch(Request $request)
+    public function endMatchAction(Request $request)
     {
-        $user = $this->getUser();
+        $match = $request->request->get('match');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $match = $em->getRepository(Game::class)
+            ->find($match);
+
+        $users = $match->getUsers();
+
+        $match->setIsEnd(true);
+
+        $em->persist($match);
+        $em->flush();
+
+        foreach ($users as $user) {
+            $this->upMatch($user);
+        }
+
+        return new Response('Good');
+
+    }
+
+    /**
+     * @param $user
+     * @return void
+     */
+    public function upMatch($user)
+    {
 
         $em = $this->getDoctrine()->getManager();
 
@@ -281,7 +310,6 @@ class UserController extends Controller
 
         $this->rankUpAction($user->getId());
 
-        return new Response('Good');
     }
 
     public function rankUpAction($userId)
@@ -308,7 +336,7 @@ class UserController extends Controller
     {
         $usersData = $request->get('users');
 
-//        return new JsonResponse($usersData);
+        $gameData = $request->get('game');
 
 
 
@@ -317,14 +345,26 @@ class UserController extends Controller
         foreach ($usersData as $userData) {
 
             $user = $this->getDoctrine()->getRepository(User::class)->find($userData['id']);
+            $game = $this->getDoctrine()->getRepository(Game::class)->find($gameData);
 
             $level = $user->getLevel();
+
+            $rate = new Rate();
+
+            $rate->setIsVote(false);
+
+            $rate->setUsers($user);
+            $rate->setGame($game);
 
             $userLevel = $userData['level'];
             $level->setAttaque($userLevel['attaque']);
             $level->setDefense($userLevel['defense']);
             $level->setGardien($userLevel['gardien']);
+            $level->setCountRedCard($userLevel['redCard']);
+            $level->setCountYellowCard($userLevel['yellowCard']);
+
             $em->persist($level);
+            $em->persist($rate);
 
         }
 

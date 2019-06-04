@@ -118,6 +118,10 @@ class RegularityPlayer
 
     public function __toString()
     {
-       return $this->name;
+        if(is_null($this->name)) {
+            return 'NULL';
+        }
+
+        return $this->name;
     }
 }

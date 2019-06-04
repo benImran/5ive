@@ -82,12 +82,23 @@ swiftmailer:
     password: '%mailer_password%'
     spool: { type: memory }
 
-
+sonata_admin:
+    title: " "
+    title_logo: img/logo-b.svg
+    templates:
+        layout: admin\standard_layout.html.twig
+    assets:
+        extra_stylesheets:
+            - css/admin.css
 # Sonata Configuration
 sonata_block:
     blocks:
+        sonata.user.block.menu:    # used to display the menu in profile pages
+        sonata.user.block.account: # used to display menu option (login option)
         # enable the SonataAdminBundle block
         sonata.admin.block.admin_list:
+            contexts: [admin]
+        sonata.admin.block.search_result:
             contexts: [admin]
 
 # Sonata Media Bundle Configuration

@@ -27,7 +27,7 @@ class Level
 
 
     /**
-     * @ORM\Column(type="integer", name="count_level")
+     * @ORM\Column(type="integer", name="count_match")
      * @JMS\Expose
      * @JMS\Groups({"game","games","level","profilLevel","profil"})
      */
@@ -38,21 +38,21 @@ class Level
      *@ORM\ManyToOne(targetEntity="LevelBundle\Entity\Rank", inversedBy="levels")
      *@ORM\JoinColumn(name="rank_id", referencedColumnName="id")
      * @JMS\Expose
-     * @JMS\Groups({"level","profilLevel"})
+     * @JMS\Groups({"level","profilLevel", "game", "games"})
      */
     private $rank;
 
     /**
-     * @ORM\Column(type="integer", name="count_yellow_card")
+     * @ORM\Column(type="integer", name="count_yellow_card", options={"default":0})
      * @JMS\Expose
-     * @JMS\Groups({"level","profilLevel"})
+     * @JMS\Groups({"level","profilLevel", "game", "games"})
      */
     private $countYellowCard = 0;
 
     /**
-     * @ORM\Column(type="integer", name="count_red_card")
+     * @ORM\Column(type="integer", name="count_red_card", options={"default":0})
      * @JMS\Expose
-     * @JMS\Groups({"level","profilLevel"})
+     * @JMS\Groups({"level","profilLevel", "game", "games"})
      */
     private $countRedCard = 0;
 
