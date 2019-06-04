@@ -215,8 +215,8 @@
 	
     ```
     
-- **Rejoindre des matchs :** POST `/api/newMatch` :
-	- Body de la requête pour créer les matchs :
+- **Rejoindre des matchs :** GET `/api/joinMatch` :
+	- Body de la requête pour rejoindre les matchs :
 	```
 	
 	```
@@ -321,3 +321,72 @@
     }
     
     ```
+- **Profil par joueur :** POST `/api/profil` :
+	- Body de la requête pour voir le profil du joueur :
+	```
+	
+	```
+    - Exemple de la réponse (JSON) :
+        
+    ```
+	
+	{
+        "username": "Seb_SRFC",
+        "birth": "1993-03-05T00:00:00+01:00",
+        "level": {
+            "count_match": 2
+        },
+        "user_city": "Noisy-le-Sec",
+        "regularity_players": ""
+    }
+    
+    ```
+    
+- **Notation par joueur :** POST `/api/ratePlayers` :
+	- Body de la requête pour voir le noter les joueurs :
+	```
+	
+	```
+    - Exemple de la réponse (JSON) :
+           
+    ```
+    
+    {
+    "game": 1, 
+        "users":[
+            {
+                "id":2,
+                "level":{
+                    "attaque":2,
+                    "defense":2,
+                    "gardien":2,
+                    "redCard":2,
+                    "yellowCard":2
+                    
+                }
+            },
+            {
+                "id":29,
+                "level":{
+                    "attaque":2,
+                    "defense":2,
+                    "gardien":2,
+                    "redCard":2,
+                    "yellowCard":2
+                    
+                }
+            },
+            {
+                "id":31,
+                "level":{
+                    "attaque":2,
+                    "defense":2,
+                    "gardien":2,
+                    "redCard":2,
+                    "yellowCard":2
+                    
+                }
+            }
+        ]
+    }
+	
