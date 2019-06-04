@@ -14,11 +14,6 @@ services:
         arguments: [~, LevelBundle\Entity\Level, ~]
         tags:
         - { name: sonata.admin, manager_type: orm, label: Niveau, group: "Niveau", on_top: true, icon: '<i class="fa fa-users"></i>' }
-    admin.regularityPlayers:
-        class: AdminBundle\Admin\RegularityPlayerAdmin
-        arguments: [~, RegularityPlayerBundle\Entity\RegularityPlayer, ~]
-        tags:
-        - { name: sonata.admin, manager_type: orm, label: Régularité du joueur, group: "Régularité du joueur", on_top: true, icon: '<i class="fa fa-users"></i>' }
     admin.rank:
         class: AdminBundle\Admin\RankAdmin
         arguments: [~, LevelBundle\Entity\Rank, ~]

@@ -116,7 +116,43 @@
                 {
                     "username": "Seb"
                 }
-            ]
+            ],
+            "rate": [
+                        {
+                            "id": 107,
+                            "is_vote": false,
+                            "users": {
+                                "id": 97,
+                                "username": "testclem2",
+                                "level": {
+                                    "count_match": 1,
+                                    "count_yellow_card": 2,
+                                    "count_red_card": 1,
+                                    "attaque": 3,
+                                    "defense": 2,
+                                    "gardien": 1
+                                },
+                                "regularity_players": ""
+                            }
+                        },
+                        {
+                            "id": 113,
+                            "is_vote": false,
+                            "users": {
+                                "id": 97,
+                                "username": "testclem2",
+                                "level": {
+                                    "count_match": 1,
+                                    "count_yellow_card": 2,
+                                    "count_red_card": 1,
+                                    "attaque": 3,
+                                    "defense": 2,
+                                    "gardien": 1
+                                },
+                                "regularity_players": ""
+                            }
+                        },
+                    ]
         },
         {
             "id": 2,
@@ -127,6 +163,11 @@
             "users": []
         }
     ]
+    
+- **Création des matchs :** POST `/api/newMatch` :
+	- Body de la requête pour créer les matchs :
+	```
+	
     ```
 <a id="level"></a>
 ## Level

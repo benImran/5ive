@@ -1,4 +1,0 @@
-services:
-#    regularityPlayer.example:
-#        class: RegularityBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]

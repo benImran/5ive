@@ -117,11 +117,10 @@ class UserController extends Controller
         if (!isset($username) || empty($username)){ return new Response('le username est manquant');}
         if (!isset($email) || empty($email)){ return new Response('l\'email est manquant');}
         if (!isset($birth) || empty($birth)){ return new Response('la date de naissance est manquante');}
-        if (!isset($regularityPlayer) || empty($regularityPlayer)){ return new Response('fréquence de jeu est manquant');}
+        if (!isset($regularityPlayer) || empty($regularityPlayer)){ return new Response('la fréquence de jeu est manquante');}
         if (!isset($userCity) || empty($userCity)){ return new Response('la ville est manquante');}
         if (!isset($password) || empty($password)){ return new Response('le mot de passe est manquant');}
 
-        $regularityPlayer= $this->getDoctrine()->getRepository(RegularityPlayer::class)->find($regularityPlayer);
         $user = new User();
 
         $user->setUsername($username);
@@ -185,9 +184,6 @@ class UserController extends Controller
           dump(!empty($email));
           die;*/
         if (isset($username) || !empty($username)){
-            dump($username);
-            dump($user);
-            die;
             $user->setUsername($username);
         }
         if (isset($email) || !empty($email)){
@@ -338,23 +334,20 @@ class UserController extends Controller
 
         $gameData = $request->get('game');
 
-
-
         $em = $this->getDoctrine()->getManager();
+
+        $game = $this->getDoctrine()->getRepository(Game::class)->find($gameData);
+
+        $rate = new Rate();
+        $rate->setIsVote(true);
+        $rate->setUsers($this->getUser());
+        $rate->setGame($game);
 
         foreach ($usersData as $userData) {
 
             $user = $this->getDoctrine()->getRepository(User::class)->find($userData['id']);
-            $game = $this->getDoctrine()->getRepository(Game::class)->find($gameData);
 
             $level = $user->getLevel();
-
-            $rate = new Rate();
-
-            $rate->setIsVote(false);
-
-            $rate->setUsers($user);
-            $rate->setGame($game);
 
             $userLevel = $userData['level'];
             $level->setAttaque($userLevel['attaque']);

@@ -3,6 +3,7 @@
 namespace GameBundle\Controller;
 
 use GameBundle\Entity\Game;
+use GameBundle\Entity\Rate;
 use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -109,6 +110,11 @@ class GameApiController extends Controller
         $game->setIsEnd(1);
         $game->addUser($this->getUser());
 
+        $rate = new Rate();
+        $rate->setIsVote(false);
+        $rate->setUsers($this->getUser());
+        $rate->setGame($game);
+
         $em->persist($game);
         $em->flush();
 
@@ -135,6 +141,13 @@ class GameApiController extends Controller
         }
         else {
             $game->addUser($this->getUser());
+            $rate = new Rate();
+
+            $rate->setIsVote(false);
+
+            $rate->setUsers($this->getUser());
+            $rate->setGame($game);
+            $em->persist($rate);
         }
 
         $em->persist($game);

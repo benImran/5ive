@@ -10,7 +10,6 @@
             "AdminBundle\\": "src/5ive/AdminBundle",
             "GameBundle\\": "src/5ive/GameBundle",
             "UserBundle\\": "src/5ive/UserBundle",
-            "RegularityPlayerBundle\\": "src/5ive/RegularityPlayerBundle",
             "LevelBundle\\": "src/5ive/LevelBundle",
             "ApiBundle\\": "src/5ive/ApiBundle",
             "Application\\": "src/Application"

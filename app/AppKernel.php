@@ -42,7 +42,6 @@ class AppKernel extends Kernel
             new GameBundle\GameBundle(),
             new UserBundle\UserBundle(),
             new AdminBundle\AdminBundle(),
-            new RegularityPlayerBundle\RegularityPlayerBundle(),
             new LevelBundle\LevelBundle(),
             new ApiBundle\ApiBundle(),
         ];

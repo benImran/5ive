@@ -32,6 +32,7 @@ class User extends BaseUser implements \Serializable
 
     /**
      * @ORM\Column(type="date", name="birth", nullable=true)
+     * @JMS\Expose
      * @JMS\Groups({"profil"})
      */
     protected $birth;
@@ -73,8 +74,7 @@ class User extends BaseUser implements \Serializable
 
 
     /**
-     *@ORM\ManyToOne(targetEntity="RegularityPlayerBundle\Entity\RegularityPlayer", inversedBy="users")
-     *@ORM\JoinColumn(name="regularityPlayers_id", referencedColumnName="id")
+     * @ORM\Column(type="string", name="regularity_players")
      * @JMS\Expose
      * @JMS\Groups({"game","games","level","profilLevel","profil"})
      */
@@ -282,11 +282,10 @@ class User extends BaseUser implements \Serializable
     /**
      * Set regularityPlayers
      *
-     * @param \RegularityPlayerBundle\Entity\RegularityPlayer $regularityPlayers
-     *
+     * @param $regularityPlayers
      * @return User
      */
-    public function setRegularityPlayers(\RegularityPlayerBundle\Entity\RegularityPlayer $regularityPlayers = null)
+    public function setRegularityPlayers($regularityPlayers)
     {
         $this->regularityPlayers = $regularityPlayers;
 
@@ -295,8 +294,6 @@ class User extends BaseUser implements \Serializable
 
     /**
      * Get regularityPlayers
-     *
-     * @return \RegularityPlayerBundle\Entity\RegularityPlayer
      */
     public function getRegularityPlayers()
     {

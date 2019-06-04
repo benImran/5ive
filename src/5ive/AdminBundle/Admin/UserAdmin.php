@@ -108,7 +108,7 @@ class UserAdmin extends AbstractAdmin
             ->addIdentifier('birth', null, array('label' => 'Date de naissance'))
             ->addIdentifier('userCity', null, array('label' => 'Ville du joueur'))
             ->addIdentifier('bio', null, array('label' => 'Biographie'))
-            ->addIdentifier('regularityPlayers.name', null, array('label' => 'Régularité du joueur'))
+            ->addIdentifier('regularityPlayers', null, array('label' => 'Régularité du joueur'))
             ->addIdentifier('game', null, array('label' => 'Matchs'))
             ->add('_action', 'actions', array(
                 'actions' => array(
