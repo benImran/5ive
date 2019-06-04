@@ -218,6 +218,74 @@
 - **Rejoindre des matchs :** POST `/api/newMatch` :
 	- Body de la requête pour créer les matchs :
 	```
+	
+	```
+    - Exemple de la réponse (JSON) :
+    ```
+	{
+        "id": 22,
+        "name": "TestOrganisator",
+        "town": "Lyon",
+        "date": "2019-10-06T18:00:00+02:00",
+        "nbr_max_players": 11,
+        "organisator": {
+            "id": 34,
+            "username": "Dudu",
+            "level": {
+                "count_match": 2,
+                "rank": {
+                    "name": "Debutant"
+                },
+                "count_yellow_card": 0,
+                "count_red_card": 0,
+                "attaque": 0,
+                "defense": 0,
+                "gardien": 0
+            },
+            "regularity_players": ""
+        },
+        "is_end": false,
+        "users": [
+            {
+                "id": 31,
+                "username": "Seb_SRFC",
+                "level": {
+                    "count_match": 2,
+                    "rank": {
+                        "name": "Debutant"
+                    },
+                    "count_yellow_card": 2,
+                    "count_red_card": 2,
+                    "attaque": 13,
+                    "defense": 6,
+                    "gardien": 4
+                },
+                "regularity_players": ""
+            }
+        ],
+        "rate": [
+            {
+                "id": 145,
+                "is_vote": false,
+                "users": {
+                    "id": 31,
+                    "username": "Seb_SRFC",
+                    "level": {
+                        "count_match": 2,
+                        "rank": {
+                            "name": "Debutant"
+                        },
+                        "count_yellow_card": 2,
+                        "count_red_card": 2,
+                        "attaque": 13,
+                        "defense": 6,
+                        "gardien": 4
+                    },
+                    "regularity_players": ""
+                }
+            }
+        ]
+    }
 <a id="level"></a>
 ## Level
 - **Niveau par joueur :** POST `/api/profilLevel` :
