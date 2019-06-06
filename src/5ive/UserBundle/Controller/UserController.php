@@ -108,6 +108,7 @@ class UserController extends Controller
         //$media->set('testimg');
         $username = $request->request->get('username');
         $email = $request->request->get('email');
+        $bio = $request->request->get('bio');
         $birth = str_replace('/', '.', $request->request->get('birth'));
         $regularityPlayer = $request->request->get('regularityPlayer');
         $userCity = $request->request->get('userCity');
@@ -117,6 +118,7 @@ class UserController extends Controller
         if (!isset($username) || empty($username)){ return new Response('le username est manquant');}
         if (!isset($email) || empty($email)){ return new Response('l\'email est manquant');}
         if (!isset($birth) || empty($birth)){ return new Response('la date de naissance est manquante');}
+        if (!isset($bio) || empty($bio)){ return new Response('la bio est manquante');}
         if (!isset($regularityPlayer) || empty($regularityPlayer)){ return new Response('la fréquence de jeu est manquante');}
         if (!isset($userCity) || empty($userCity)){ return new Response('la ville est manquante');}
         if (!isset($password) || empty($password)){ return new Response('le mot de passe est manquant');}
@@ -126,6 +128,7 @@ class UserController extends Controller
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setBirth(new \DateTime($birth));
+        $user->setBio($bio);
         $user->setRegularityPlayers($regularityPlayer);
         $user->setUserCity($userCity);
         if (!isset($picture) || empty($picture)){

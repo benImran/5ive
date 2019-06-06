@@ -2,6 +2,9 @@
 
 namespace LevelBundle\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+
 /**
  * RankRepository
  *
@@ -20,6 +23,10 @@ class RankRepository extends \Doctrine\ORM\EntityRepository
             ->setFirstResult(0)
             ->getQuery();
 
-        return $query->getSingleResult();
+        try {
+            return $query->getSingleResult();
+        } catch (NoResultException $e) {
+        } catch (NonUniqueResultException $e) {
+        }
     }
 }

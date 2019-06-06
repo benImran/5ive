@@ -280,27 +280,6 @@ class User extends BaseUser implements \Serializable
 
 
     /**
-     * Set regularityPlayers
-     *
-     * @param $regularityPlayers
-     * @return User
-     */
-    public function setRegularityPlayers($regularityPlayers)
-    {
-        $this->regularityPlayers = $regularityPlayers;
-
-        return $this;
-    }
-
-    /**
-     * Get regularityPlayers
-     */
-    public function getRegularityPlayers()
-    {
-        return $this->regularityPlayers;
-    }
-
-    /**
      * Set userOrganisator
      *
      * @param \GameBundle\Entity\Game $userOrganisator
@@ -388,5 +367,29 @@ class User extends BaseUser implements \Serializable
     public function getRate()
     {
         return $this->rate;
+    }
+
+    /**
+     * Set regularityPlayers
+     *
+     * @param string $regularityPlayers
+     *
+     * @return User
+     */
+    public function setRegularityPlayers($regularityPlayers)
+    {
+        $this->regularityPlayers = $regularityPlayers;
+
+        return $this;
+    }
+
+    /**
+     * Get regularityPlayers
+     *
+     * @return string
+     */
+    public function getRegularityPlayers()
+    {
+        return $this->regularityPlayers;
     }
 }
